@@ -1,0 +1,1776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkPlay - Complete Design Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Vibrant Rainbow Palette */
+            --yellow: #FFBE0B;
+            --orange: #FB5607;
+            --pink: #FF006E;
+            --purple: #8338EC;
+            --blue: #3A86FF;
+            --green: #06FFA5;
+            --teal: #06D6A0;
+            
+            --text-dark: #2D3748;
+            --text-medium: #718096;
+            --text-light: #A0AEC0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFE4E6 50%, #E0E7FF 100%);
+            padding: 40px 20px;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .no-print {
+                display: none;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .device-frame {
+                page-break-inside: avoid;
+            }
+        }
+
+        .document-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER STYLES */
+        .document-header {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+            padding: 60px 40px;
+            border-radius: 24px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 12px 40px rgba(255, 0, 110, 0.3);
+        }
+
+        .document-header h1 {
+            font-size: 56px;
+            color: white;
+            margin-bottom: 12px;
+            text-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .document-header .subtitle {
+            font-size: 24px;
+            color: white;
+            text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 8px;
+        }
+
+        .document-header .team-info {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 16px;
+        }
+
+        .print-instructions {
+            background: white;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            border-left: 6px solid var(--pink);
+        }
+
+        .print-instructions h3 {
+            color: var(--pink);
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .print-instructions p {
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* TABLE OF CONTENTS */
+        .toc {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc h2 {
+            font-size: 32px;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--pink);
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            padding: 12px 0;
+            font-size: 18px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .toc li:last-child {
+            border-bottom: none;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toc a:hover {
+            color: var(--pink);
+        }
+
+        .toc .section-number {
+            font-weight: 700;
+            color: var(--purple);
+            margin-right: 12px;
+        }
+
+        /* SECTION STYLES */
+        .section {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 3px solid var(--pink);
+        }
+
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: 36px;
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .section h3 {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin: 32px 0 16px 0;
+        }
+
+        .section h4 {
+            font-size: 22px;
+            color: var(--purple);
+            margin: 24px 0 12px 0;
+        }
+
+        .section p {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+        }
+
+        .section ul, .section ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+        }
+
+        .section li {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        /* CODE BLOCKS */
+        .code-block {
+            background: #2D3748;
+            color: #68D391;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 16px 0;
+            overflow-x: auto;
+            line-height: 1.6;
+        }
+
+        .code-comment {
+            color: #A0AEC0;
+        }
+
+        /* INFO BOXES */
+        .info-box {
+            background: linear-gradient(135deg, #E0E7FF 0%, #E6FFFA 100%);
+            border-left: 6px solid var(--blue);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .info-box h4 {
+            color: var(--blue);
+            margin-bottom: 12px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #FFF8E6 0%, #FFE0B2 100%);
+            border-left: 6px solid var(--yellow);
+            padding: 20px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--orange);
+            margin-bottom: 12px;
+        }
+
+        /* MOCKUP STYLES */
+        .device-frame {
+            background: linear-gradient(135deg, var(--text-dark) 0%, #4A5568 100%);
+            border-radius: 32px;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin: 24px 0;
+        }
+
+        .device-screen {
+            background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF5 100%);
+            border-radius: 20px;
+            padding: 40px 24px;
+            min-height: 600px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* HOME SCREEN STYLES */
+        .home-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .home-header h2 {
+            font-size: 64px;
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+
+        .home-header p {
+            font-size: 28px;
+            color: var(--text-medium);
+            font-weight: 500;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 0 24px;
+        }
+
+        .category-card {
+            border-radius: 28px;
+            padding: 32px 24px;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover::before {
+            opacity: 1;
+        }
+
+        .category-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+        }
+
+        .category-card:active {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .category-card.animals {
+            background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 100%);
+        }
+
+        .category-card.foods {
+            background: linear-gradient(135deg, #06FFA5 0%, #06D6A0 100%);
+        }
+
+        .category-card.toys {
+            background: linear-gradient(135deg, #8338EC 0%, #FF006E 100%);
+        }
+
+        .category-icon {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 72px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .category-title {
+            font-size: 36px;
+            font-weight: 700;
+             color: white !important;  /* Added !important to override .section h4 */
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+
+
+        /* FLASHCARD SCREEN STYLES */
+        .flashcard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding: 0 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            border: none;
+            border-radius: 16px;
+            padding: 16px 32px;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Fredoka', sans-serif;
+            box-shadow: 0 4px 16px rgba(131, 56, 236, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-6px) scale(1.05);
+            box-shadow: 0 8px 24px rgba(131, 56, 236, 0.5);
+        }
+
+        .back-button:active {
+            transform: translateX(-3px) scale(1.0);
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .progress-label {
+            font-size: 18px;
+            color: var(--text-medium);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--green) 0%, var(--teal) 50%, var(--blue) 100%);
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 16px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .flashcard-main {
+            text-align: center;
+            padding: 0 24px;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 32px;
+            padding: 48px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            max-width: 500px;
+            margin: 0 auto 32px;
+            border: 5px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .flashcard:hover {
+            transform: scale(1.02) translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .flashcard::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(135deg, var(--yellow), var(--orange), var(--pink), var(--purple), var(--blue));
+            border-radius: 32px;
+            z-index: -1;
+        }
+
+        .flashcard-image-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 140px;
+            margin-bottom: 32px;
+            box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 4px solid white;
+        }
+
+        .flashcard-word {
+            font-size: 64px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent; /* Fallback for browsers that don't support background-clip */
+            margin-bottom: 40px;
+        }
+        
+        .flashcard:hover .flashcard-word {
+            background: white;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .flashcard-controls {
+            display: flex;
+            gap: 28px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-button-wrapper {
+            text-align: center;
+        }
+
+        .control-button {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 5px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .control-button:hover {
+            transform: scale(1.2) rotate(8deg);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-button:active {
+            transform: scale(0.95);
+        }
+
+        .control-button.listen {
+            background: linear-gradient(135deg, var(--blue), #5B9FFF);
+        }
+
+        .control-button.record {
+            background: linear-gradient(135deg, var(--pink), #FF3385);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 8px 24px rgba(255, 0, 110, 0.4);
+            }
+            50% {
+                box-shadow: 0 12px 40px rgba(255, 0, 110, 0.8);
+            }
+        }
+
+        .control-button.record:hover {
+            animation: none;
+            transform: scale(1.2) rotate(8deg);
+        }
+
+        .control-button.play {
+            background: linear-gradient(135deg, var(--green), #33FFB8);
+        }
+
+        .control-label {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-top: 12px;
+            font-weight: 700;
+        }
+
+        .flashcard:hover .control-label {
+            color: white;
+        }
+
+        .encouragement-message {
+            background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+            color: white;
+            padding: 24px 40px;
+            border-radius: 24px;
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 8px 28px rgba(255, 0, 110, 0.4);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .encouragement-message:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 36px rgba(255, 0, 110, 0.6);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* COLOR SWATCHES */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .color-swatch {
+            text-align: center;
+        }
+
+        .color-box {
+            height: 120px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            border: 4px solid white;
+        }
+
+        .color-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+
+        .color-hex {
+            font-size: 16px;
+            color: var(--text-medium);
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+        }
+
+        .swatch-yellow { background: linear-gradient(135deg, #FFBE0B, #FDD835); }
+        .swatch-orange { background: linear-gradient(135deg, #FB5607, #FF7043); }
+        .swatch-pink { background: linear-gradient(135deg, #FF006E, #FF3385); }
+        .swatch-purple { background: linear-gradient(135deg, #8338EC, #A855F7); }
+        .swatch-blue { background: linear-gradient(135deg, #3A86FF, #5B9FFF); }
+        .swatch-green { background: linear-gradient(135deg, #06FFA5, #33FFB8); }
+        .swatch-teal { background: linear-gradient(135deg, #06D6A0, #2DD4BF); }
+
+        /* COMPONENT EXAMPLES */
+        .component-example {
+            background: #F7FAFC;
+            padding: 32px;
+            border-radius: 16px;
+            margin: 24px 0;
+            border: 2px solid #E2E8F0;
+        }
+
+        .component-example h4 {
+            color: var(--purple);
+            margin-bottom: 16px;
+        }
+
+        /* CHECKLIST */
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 12px 0;
+            padding-left: 32px;
+            position: relative;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .checklist li:before {
+            content: '☐';
+            position: absolute;
+            left: 0;
+            font-size: 20px;
+            color: var(--purple);
+        }
+
+        /* TABLE */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        .spec-table th {
+            background: linear-gradient(135deg, var(--purple), var(--pink));
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+        }
+
+        .spec-table td {
+            padding: 16px;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .spec-table tr:hover {
+            background: #F7FAFC;
+        }
+
+        /* Typography Examples */
+        .type-xxl { font-size: 32px; font-weight: 700; }
+        .type-xl { font-size: 24px; font-weight: 600; }
+        .type-lg { font-size: 20px; font-weight: 600; }
+        .type-base { font-size: 16px; }
+        .type-sm { font-size: 14px; }
+        .type-xs { font-size: 12px; }
+
+        /* Footer */
+        .footer-text { margin-top: 24px; }
+        .footer-version { 
+            margin-top: 16px; 
+            color: var(--text-medium); 
+            font-size: 14px; 
+        }
+
+        @media (max-width: 768px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .document-header h1 {
+                font-size: 36px;
+            }
+
+            .section h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <!-- HEADER -->
+        <div class="document-header">
+            <h1>TalkPlay Design Document</h1>
+            <div class="subtitle">Complete Design System & Implementation Guide</div>
+            <div class="team-info">Team 4 | Sprint 1 | CSE 499 Senior Project</div>
+            <div class="team-info">Frontend/UI: Andrea | APIs/Logic: Amon | Content/QA/Management: Livia</div>
+        </div>
+
+        <!-- TABLE OF CONTENTS -->
+        <div class="toc">
+            <h2>Table of Contents</h2>
+            <ul>
+                <li><span class="section-number">1</span> Project Overview</li>
+                <li><span class="section-number">2</span> Visual Mockups</li>
+                <li><span class="section-number">3</span> Color Palette</li>
+                <li><span class="section-number">4</span> Typography System</li>
+                <li><span class="section-number">5</span> Spacing & Layout</li>
+                <li><span class="section-number">6</span> Component Specifications</li>
+                <li><span class="section-number">7</span> Responsive Design</li>
+                <li><span class="section-number">8</span> Animations & Interactions</li>
+                <li><span class="section-number">9</span> Accessibility Guidelines</li>
+                <li><span class="section-number">10</span> Implementation Checklist</li>
+            </ul>
+        </div>
+
+        <!-- SECTION 1: PROJECT OVERVIEW -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 1</div>
+                <h2>Project Overview</h2>
+            </div>
+
+            <h3>About TalkPlay</h3>
+            <p>TalkPlay is a speech development web application designed for children aged 3-5 with speech delays. The app helps children practice pronunciation at home through interactive flashcards featuring colorful visuals and engaging audio feedback.</p>
+
+            <h3>Design Principles</h3>
+            <ul>
+                <li><strong>Child-First:</strong> Large, easy-to-tap targets (minimum 100px for buttons)</li>
+                <li><strong>Joyful:</strong> Bright, engaging colors that create positive emotions</li>
+                <li><strong>Clear:</strong> High contrast, simple layouts with minimal clutter</li>
+                <li><strong>Encouraging:</strong> Positive reinforcement through visual feedback</li>
+                <li><strong>Accessible:</strong> Works across devices, easy for small hands</li>
+            </ul>
+
+            <h3>Target Audience</h3>
+            <ul>
+                <li><strong>Primary:</strong> Children aged 3-5 with speech development delays</li>
+                <li><strong>Secondary:</strong> Parents and caregivers facilitating speech practice</li>
+            </ul>
+
+            <div class="info-box">
+                <h4>Key Insight</h4>
+                <p>We chose a vibrant, gradient-rich color palette over traditional educational app aesthetics. Research shows that bold, saturated colors are more engaging for young children and create positive emotional associations with learning activities.</p>
+            </div>
+        </div>
+
+        <!-- SECTION 2: VISUAL MOCKUPS -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 2</div>
+                <h2>Visual Mockups</h2>
+            </div>
+
+            <h3>Home Screen - Category Selection</h3>
+            <p>The home screen features three category cards, each with its own distinct gradient. Children can easily identify and select their preferred practice category.</p>
+
+            <div class="device-frame">
+                <div class="device-screen">
+                    <div class="home-header">
+                        <h2>TalkPlay</h2>
+                        <p>Choose a category to practice!</p>
+                    </div>
+                    <div class="category-grid">
+                        <div class="category-card animals">
+                            <div class="category-icon">🦁</div>
+                            <h4 class="category-title">Animals</h4>
+                        </div>
+                        <div class="category-card foods">
+                            <div class="category-icon">🍎</div>
+                            <h4 class="category-title">Foods</h4>
+                        </div>
+                        <div class="category-card toys">
+                            <div class="category-icon">🧸</div>
+                            <h4 class="category-title">Toys</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Flashcard Screen - Interactive Learning</h3>
+            <p>The flashcard screen provides an immersive learning experience with large visual elements, audio controls, and a rainbow progress bar to track completion.</p>
+
+            <div class="device-frame">
+                <div class="device-screen">
+                    <div class="flashcard-header">
+                        <button class="back-button">← Back</button>
+                        <div class="progress-bar-container">
+                            <div class="progress-label">Progress: 4 of 10 words completed</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill">40%</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flashcard-main">
+                        <div class="flashcard">
+                            <div class="flashcard-image-placeholder">🦁</div>
+                            <div class="flashcard-word">Lion</div>
+                            <div class="flashcard-controls">
+                                <div class="control-button-wrapper">
+                                    <button class="control-button listen">🔊</button>
+                                    <div class="control-label">Listen</div>
+                                </div>
+                                <div class="control-button-wrapper">
+                                    <button class="control-button record">🎤</button>
+                                    <div class="control-label">Record</div>
+                                </div>
+                                <div class="control-button-wrapper">
+                                    <button class="control-button play">▶️</button>
+                                    <div class="control-label">Play</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="encouragement-message">
+                            Amazing work! Keep going!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: COLOR PALETTE -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 3</div>
+                <h2>Color Palette - "Rainbow Playground"</h2>
+            </div>
+
+            <p>Our vibrant color palette consists of 7 bold, saturated colors that create an energetic and playful atmosphere perfect for engaging young learners.</p>
+
+            <div class="color-grid">
+                <div class="color-swatch">
+                    <div class="color-box swatch-yellow"></div>
+                    <div class="color-name">Sunshine Yellow</div>
+                    <div class="color-hex">#FFBE0B</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-orange"></div>
+                    <div class="color-name">Vibrant Orange</div>
+                    <div class="color-hex">#FB5607</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-pink"></div>
+                    <div class="color-name">Hot Pink</div>
+                    <div class="color-hex">#FF006E</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-purple"></div>
+                    <div class="color-name">Electric Purple</div>
+                    <div class="color-hex">#8338EC</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-blue"></div>
+                    <div class="color-name">Bright Blue</div>
+                    <div class="color-hex">#3A86FF</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-green"></div>
+                    <div class="color-name">Neon Green</div>
+                    <div class="color-hex">#06FFA5</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="color-box swatch-teal"></div>
+                    <div class="color-name">Fresh Teal</div>
+                    <div class="color-hex">#06D6A0</div>
+                </div>
+            </div>
+
+            <h3>Color Usage</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Color(s)</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Animals Category</td>
+                        <td>Yellow → Orange gradient</td>
+                        <td>Warm, energetic feel</td>
+                    </tr>
+                    <tr>
+                        <td>Foods Category</td>
+                        <td>Green → Teal gradient</td>
+                        <td>Fresh, healthy association</td>
+                    </tr>
+                    <tr>
+                        <td>Toys Category</td>
+                        <td>Purple → Pink gradient</td>
+                        <td>Playful, imaginative feel</td>
+                    </tr>
+                    <tr>
+                        <td>Listen Button</td>
+                        <td>Blue gradient</td>
+                        <td>Calm, focused listening</td>
+                    </tr>
+                    <tr>
+                        <td>Record Button</td>
+                        <td>Pink gradient (pulsing)</td>
+                        <td>Active, attention-grabbing</td>
+                    </tr>
+                    <tr>
+                        <td>Play Button</td>
+                        <td>Green gradient</td>
+                        <td>Success, playback</td>
+                    </tr>
+                    <tr>
+                        <td>Progress Bar</td>
+                        <td>Green → Teal → Blue</td>
+                        <td>Journey visualization</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>CSS Variables</h3>
+            <div class="code-block">
+                :root {
+                <span class="code-comment">/* Primary Colors */</span>
+                --yellow: #FFBE0B;
+                --orange: #FB5607;
+                --pink: #FF006E;
+                --purple: #8338EC;
+                --blue: #3A86FF;
+                --green: #06FFA5;
+                --teal: #06D6A0;
+                
+                <span class="code-comment">/* Text Colors */</span>
+                --text-dark: #2D3748;
+                --text-medium: #718096;
+                --text-light: #FFFFFF;
+                }
+            </div>
+        </div>
+
+        <!-- SECTION 4: TYPOGRAPHY -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 4</div>
+                <h2>Typography System</h2>
+            </div>
+
+            <h3>Font Family</h3>
+            <p><strong>Primary:</strong> Fredoka (Google Fonts) - Rounded, playful, highly legible<br>
+            <strong>Fallback:</strong> Comic Sans MS, Poppins, System Sans-serif</p>
+
+            <div class="code-block">
+                    font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+            </div>
+
+            <h3>Font Scale</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Size Name</th>
+                        <th>Size</th>
+                        <th>Usage</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>XXL</td>
+                        <td>64px</td>
+                        <td>Flashcard words</td>
+                        <td class="type-xxl">Lion</td>
+                    </tr>
+                    <tr>
+                        <td>XL</td>
+                        <td>48px</td>
+                        <td>Page titles</td>
+                        <td class="type-xl">TalkPlay</td>
+                    </tr>
+                    <tr>
+                        <td>LG</td>
+                        <td>32px</td>
+                        <td>Category titles</td>
+                        <td class="type-lg">Animals</td>
+                    </tr>
+                    <tr>
+                        <td>Base</td>
+                        <td>24px</td>
+                        <td>Body text, instructions</td>
+                        <td class="type-base">Click to listen!</td>
+                    </tr>
+                    <tr>
+                        <td>SM</td>
+                        <td>18px</td>
+                        <td>Secondary text</td>
+                        <td class="type-sm">Progress: 4/10</td>
+                    </tr>
+                    <tr>
+                        <td>XS</td>
+                        <td>14px</td>
+                        <td>Helper text, labels</td>
+                        <td class="type-xs">Record</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>CSS Variables</h3>
+            <div class="code-block">
+                :root {
+                --font-size-xs: 14px;
+                --font-size-sm: 18px;
+                --font-size-base: 24px;
+                --font-size-lg: 32px;
+                --font-size-xl: 48px;
+                --font-size-xxl: 64px;
+                
+                --font-weight-normal: 400;
+                --font-weight-medium: 500;
+                --font-weight-semibold: 600;
+                --font-weight-bold: 700;
+                }
+            </div>
+        </div>
+
+        <!-- SECTION 5: SPACING & LAYOUT -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 5</div>
+                <h2>Spacing & Layout System</h2>
+            </div>
+
+            <h3>Base Unit: 8px</h3>
+            <p>All spacing values are multiples of 8px for consistent visual rhythm.</p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Value</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--space-1</td>
+                        <td>8px</td>
+                        <td>Tight spacing, inline elements</td>
+                    </tr>
+                    <tr>
+                        <td>--space-2</td>
+                        <td>16px</td>
+                        <td>Small gaps, padding</td>
+                    </tr>
+                    <tr>
+                        <td>--space-3</td>
+                        <td>24px</td>
+                        <td>Standard gap between elements</td>
+                    </tr>
+                    <tr>
+                        <td>--space-4</td>
+                        <td>32px</td>
+                        <td>Section padding, card padding</td>
+                    </tr>
+                    <tr>
+                        <td>--space-6</td>
+                        <td>48px</td>
+                        <td>Large section spacing</td>
+                    </tr>
+                    <tr>
+                        <td>--space-8</td>
+                        <td>64px</td>
+                        <td>Major section dividers</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Border Radius</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Variable</th>
+                        <th>Value</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>--radius-md</td>
+                        <td>16px</td>
+                        <td>Small buttons, inputs</td>
+                    </tr>
+                    <tr>
+                        <td>--radius-lg</td>
+                        <td>24px</td>
+                        <td>Cards, containers</td>
+                    </tr>
+                    <tr>
+                        <td>--radius-xl</td>
+                        <td>32px</td>
+                        <td>Flashcards, large elements</td>
+                    </tr>
+                    <tr>
+                        <td>--radius-full</td>
+                        <td>9999px</td>
+                        <td>Circular buttons</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Responsive Breakpoints</h3>
+            <div class="code-block">
+            <span class="code-comment">/* Mobile: Single column */</span>
+
+            @media (max-width: 576px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-icon {
+                width: 100px;
+                height: 100px;
+            }
+            }
+
+            <span class="code-comment">/* Tablet: 2 columns */</span>
+            @media (min-width: 768px) and (max-width: 991px) {
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            }
+
+            <span class="code-comment">/* Desktop: 3 columns */</span>
+            @media (min-width: 992px) {
+            .category-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            }
+                </div>
+            </div>
+
+            <!-- SECTION 6: COMPONENT SPECIFICATIONS -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">Section 6</div>
+                    <h2>Component Specifications</h2>
+                </div>
+
+                <h3>6.1 Category Card</h3>
+                <div class="component-example">
+                    <h4>Specifications:</h4>
+                    <ul>
+                        <li><strong>Dimensions:</strong> Flexible width, min-height 280px</li>
+                        <li><strong>Border radius:</strong> 28px</li>
+                        <li><strong>Padding:</strong> 32px (top/bottom), 24px (left/right)</li>
+                        <li><strong>Background:</strong> Gradient (category-specific)</li>
+                        <li><strong>Shadow:</strong> 0 8px 24px rgba(0, 0, 0, 0.15)</li>
+                        <li><strong>Hover effect:</strong> translateY(-12px) + scale(1.03)</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    .category-card {
+                    border-radius: 28px;
+                    padding: 32px 24px;
+                    text-align: center;
+                    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+                    transition: all 0.3s ease;
+                    cursor: pointer;
+                    }
+
+                    .category-card.animals {
+                    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 100%);
+                    }
+
+                    .category-card:hover {
+                    transform: translateY(-12px) scale(1.03);
+                    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+                    }
+
+                    .category-icon {
+                    width: 140px;
+                    height: 140px;
+                    background: rgba(255, 255, 255, 0.9);
+                    border-radius: 70px;
+                    font-size: 72px;
+                    }
+
+                    .category-title {
+                        font-size: 36px;
+                        font-weight: 700;
+                        color: white;
+                        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+                    }
+                </div>
+
+                <h3>6.2 Audio Control Buttons</h3>
+                <div class="component-example">
+                    <h4>Specifications:</h4>
+                    <ul>
+                        <li><strong>Dimensions:</strong> 100px × 100px</li>
+                        <li><strong>Shape:</strong> Perfect circle (border-radius: 50%)</li>
+                        <li><strong>Border:</strong> 5px solid white</li>
+                        <li><strong>Background:</strong> Gradient (button-specific)</li>
+                        <li><strong>Shadow:</strong> 0 6px 20px (color-specific)</li>
+                        <li><strong>Hover effect:</strong> scale(1.15) + rotate(5deg)</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <span class="code-comment">/* Listen Button - Blue */</span>
+                    .btn-icon.listen {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    background: linear-gradient(135deg, #3A86FF, #5B9FFF);
+                    border: 5px solid white;
+                    box-shadow: 0 6px 20px rgba(58, 134, 255, 0.4);
+                    }
+
+                    <span class="code-comment">/* Record Button - Pink (Pulsing) */</span>
+                    .btn-icon.record {
+                    background: linear-gradient(135deg, #FF006E, #FF3385);
+                    animation: pulse 2s infinite;
+                    }
+
+                    @keyframes pulse {
+                    0%, 100% {
+                        box-shadow: 0 8px 24px rgba(255, 0, 110, 0.3);
+                        transform: scale(1);
+                    }
+                    50% {
+                        box-shadow: 0 12px 36px rgba(255, 0, 110, 0.6);
+                        transform: scale(1.05);
+                    }
+                    }
+
+                    <span class="code-comment">/* Play Button - Green */</span>
+                    .btn-icon.play {
+                    background: linear-gradient(135deg, #06FFA5, #33FFB8);
+                    }
+
+                    .btn-icon:hover {
+                    transform: scale(1.15) rotate(5deg);
+                    }
+                </div>
+
+                <h3>6.3 Progress Bar</h3>
+                <div class="component-example">
+                    <h4>Specifications:</h4>
+                    <ul>
+                        <li><strong>Height:</strong> 40px</li>
+                        <li><strong>Border radius:</strong> 20px</li>
+                        <li><strong>Background:</strong> rgba(255, 255, 255, 0.8)</li>
+                        <li><strong>Fill:</strong> Green → Teal → Blue gradient</li>
+                        <li><strong>Border:</strong> 3px solid white</li>
+                        <li><strong>Transition:</strong> width 0.5s ease</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    .progress-bar {
+                    height: 40px;
+                    background: rgba(255, 255, 255, 0.8);
+                    border-radius: 20px;
+                    border: 3px solid white;
+                    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+                    }
+
+                    .progress-fill {
+                    height: 100%;
+                    background: linear-gradient(90deg, 
+                        #06FFA5 0%, 
+                        #06D6A0 50%, 
+                        #3A86FF 100%
+                    );
+                    transition: width 0.5s ease;
+                    color: white;
+                    font-weight: 700;
+                    }
+                </div>
+
+                <h3>6.4 Flashcard</h3>
+                <div class="component-example">
+                    <h4>Specifications:</h4>
+                    <ul>
+                        <li><strong>Max width:</strong> 500px</li>
+                        <li><strong>Border radius:</strong> 32px</li>
+                        <li><strong>Padding:</strong> 48px</li>
+                        <li><strong>Background:</strong> White</li>
+                        <li><strong>Border:</strong> 5px rainbow gradient (pseudo-element)</li>
+                        <li><strong>Shadow:</strong> 0 12px 40px rgba(0, 0, 0, 0.15)</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    .flashcard {
+                    background: white;
+                    border-radius: 32px;
+                    padding: 48px;
+                    max-width: 500px;
+                    border: 5px solid transparent;
+                    background-clip: padding-box;
+                    position: relative;
+                    }
+
+                    <span class="code-comment">/* Rainbow border effect */</span>
+                    .flashcard::before {
+                    content: '';
+                    position: absolute;
+                    top: -5px;
+                    left: -5px;
+                    right: -5px;
+                    bottom: -5px;
+                    background: linear-gradient(135deg, 
+                        #FFBE0B, #FB5607, #FF006E, #8338EC, #3A86FF
+                    );
+                    border-radius: 32px;
+                    z-index: -1;
+                    }
+
+                    .flashcard-word {
+                        font-size: 64px;
+                        font-weight: 700;
+                        background: linear-gradient(135deg, var(--orange) 0%, var(--pink) 100%);
+                        -webkit-background-clip: text;
+                        -webkit-text-fill-color: transparent;
+                        background-clip: text;
+                        color: transparent; /* Fallback for browsers that don't support background-clip */
+                        margin-bottom: 40px;
+                    }
+            </div>
+        </div>
+
+        <!-- SECTION 7: RESPONSIVE DESIGN -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 7</div>
+                <h2>Responsive Design</h2>
+            </div>
+
+            <h3>Device Targets</h3>
+            <ul>
+                <li><strong>Mobile:</strong> 320px - 576px (iPhone, Android phones)</li>
+                <li><strong>Tablet:</strong> 768px - 991px (iPad, Android tablets)</li>
+                <li><strong>Desktop:</strong> 992px+ (Laptops, monitors)</li>
+            </ul>
+
+            <h3>Layout Adjustments</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Mobile</th>
+                        <th>Tablet</th>
+                        <th>Desktop</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Category Grid</td>
+                        <td>1 column</td>
+                        <td>2 columns</td>
+                        <td>3 columns</td>
+                    </tr>
+                    <tr>
+                        <td>Icon Buttons</td>
+                        <td>100px × 100px</td>
+                        <td>100px × 100px</td>
+                        <td>100px × 100px</td>
+                    </tr>
+                    <tr>
+                        <td>Flashcard Word</td>
+                        <td>48px</td>
+                        <td>56px</td>
+                        <td>64px</td>
+                    </tr>
+                    <tr>
+                        <td>Container Padding</td>
+                        <td>24px</td>
+                        <td>40px</td>
+                        <td>48px</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>Touch Target Requirements</h4>
+                <p><strong>Minimum:</strong> 80px × 80px<br>
+                <strong>Recommended:</strong> 100px × 100px<br>
+                <strong>Spacing:</strong> 24px between interactive elements</p>
+            </div>
+        </div>
+
+        <!-- SECTION 8: ANIMATIONS -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 8</div>
+                <h2>Animations & Interactions</h2>
+            </div>
+
+            <h3>Transition Timing</h3>
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Speed</th>
+                        <th>Duration</th>
+                        <th>Usage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fast</td>
+                        <td>0.15s</td>
+                        <td>Button press, active states</td>
+                    </tr>
+                    <tr>
+                        <td>Normal</td>
+                        <td>0.3s</td>
+                        <td>Hover effects, card movements</td>
+                    </tr>
+                    <tr>
+                        <td>Slow</td>
+                        <td>0.5s</td>
+                        <td>Progress bar, page transitions</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Hover Effects</h3>
+            <ul>
+                <li><strong>Category Cards:</strong> Lift 12px + scale 1.03</li>
+                <li><strong>Icon Buttons:</strong> Scale 1.15 + rotate 5deg</li>
+                <li><strong>Back Button:</strong> translateX(-4px)</li>
+            </ul>
+
+            <h3>Special Animations</h3>
+            <div class="code-block">
+                <span class="code-comment">/* Recording Button Pulse */</span>
+                @keyframes pulse {
+                0%, 100% {
+                    box-shadow: 0 8px 24px rgba(255, 0, 110, 0.3);
+                    transform: scale(1);
+                }
+                50% {
+                    box-shadow: 0 12px 36px rgba(255, 0, 110, 0.6);
+                    transform: scale(1.05);
+                }
+                }
+
+                .btn-icon.record {
+                animation: pulse 2s infinite;
+                }
+            </div>
+        </div>
+
+        <!-- SECTION 9: ACCESSIBILITY -->
+        <div class="section">
+            <div class="section-header">
+                <div class="section-number">Section 9</div>
+                <h2>Accessibility Guidelines</h2>
+            </div>
+
+            <h3>Touch Targets</h3>
+            <ul>
+                <li><strong>Minimum size:</strong> 80px × 80px</li>
+                <li><strong>Recommended:</strong> 100px × 100px (our standard)</li>
+                <li><strong>Spacing:</strong> 24px minimum between interactive elements</li>
+            </ul>
+
+            <h3>Color Contrast</h3>
+            <ul>
+                <li><strong>Body text on white:</strong> Minimum 4.5:1 ratio</li>
+                <li><strong>Large text:</strong> Minimum 3:1 ratio</li>
+                <li><strong>White text on gradients:</strong> Text shadows for legibility</li>
+            </ul>
+
+            <h3>ARIA Labels</h3>
+            <div class="code-block">
+                &lt;button 
+                class="control-button listen" 
+                aria-label="Listen to word pronunciation"
+                &gt;
+                🔊
+                &lt;/button&gt;
+
+                &lt;button 
+                class="control-button record" 
+                aria-label="Record your voice"
+                &gt;
+                🎤
+                &lt;/button&gt;
+
+                &lt;button 
+                class="control-button play" 
+                aria-label="Play your recording"
+                &gt;
+                ▶️
+                &lt;/button&gt;
+                            </div>
+
+                            <h3>Keyboard Navigation</h3>
+                            <div class="code-block">
+                .interactive:focus {
+                outline: 4px solid var(--blue);
+                outline-offset: 4px;
+                }
+            </div>
+        </div>
+
+            <!-- SECTION 10: IMPLEMENTATION CHECKLIST -->
+            <div class="section">
+                <div class="section-header">
+                    <div class="section-number">Section 10</div>
+                    <h2>Implementation Checklist - Sprint 1</h2>
+                </div>
+
+                <h3>Andrea's Tasks (Frontend/UI)</h3>
+
+                <h4>Task 1: Setup & Styling Structure (2-3 hours)</h4>
+                <ul class="checklist">
+                    <li>Create global.css with CSS variables</li>
+                    <li>Import Google Font (Fredoka)</li>
+                    <li>Set up base styles (body, container, reset)</li>
+                    <li>Configure responsive grid system</li>
+                </ul>
+
+                <h4>Task 2: Home Component (2-3 hours)</h4>
+                <ul class="checklist">
+                    <li>Build main homepage component structure</li>
+                    <li>Create category grid layout</li>
+                    <li>Add TalkPlay header with gradient text</li>
+                    <li>Implement responsive behavior</li>
+                </ul>
+
+                <h4>Task 3: CategoryCard Component (2-3 hours)</h4>
+                <ul class="checklist">
+                    <li>Create reusable CategoryCard component</li>
+                    <li>Style with category-specific gradients</li>
+                    <li>Add icon circles with white background</li>
+                    <li>Implement hover effects (lift + scale)</li>
+                    <li>Add React Router Link navigation</li>
+                </ul>
+
+                <h4>Task 4: Responsive Testing & Polish (2 hours)</h4>
+                <ul class="checklist">
+                    <li>Test on mobile (375px width)</li>
+                    <li>Test on tablet (768px width)</li>
+                    <li>Test on desktop (1200px+ width)</li>
+                    <li>Verify touch targets are 100px</li>
+                    <li>Check color contrast</li>
+                    <li>Verify hover animations work smoothly</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Total Estimated Time: 10-13 hours</h4>
+                    <p>This meets the 10+ hours per week requirement and aligns with Sprint 1 goals.</p>
+                </div>
+
+                <h3>Amon's Tasks (APIs/Logic)</h3>
+
+                <h4>Task 1: React Setup & Routing (3-4 hours)</h4>
+                <ul class="checklist">
+                    <li>Initialize the React project (npx create-react-app)</li>
+                    <li>Install and configure react-router-dom</li>
+                    <li>Define basic routes in App.jsx (Home, FlashcardPage)</li>
+                    <li>Set up project folder structure</li>
+                </ul>
+
+                <h4>Task 2: Data Structure & Mocks (2 hours)</h4>
+                <ul class="checklist">
+                    <li>Create data/categories.js file</li>
+                    <li>Export JSON array with 3 categories (Animals, Foods, Toys)</li>
+                    <li>Include category metadata (id, name, color, icon)</li>
+                    <li>Add placeholder word data structure</li>
+                </ul>
+
+                <h4>Task 3: LocalStorage Logic Setup (3 hours)</h4>
+                <ul class="checklist">
+                    <li>Create utils/storage.js helper file</li>
+                    <li>Write getProgress() function to read from LocalStorage</li>
+                    <li>Write saveProgress(wordId) function to save to LocalStorage</li>
+                    <li>Add clearProgress() utility function</li>
+                    <li>Test LocalStorage persistence in browser</li>
+                </ul>
+
+                <h4>Task 4: Data Integration & Empty Page (2-3 hours)</h4>
+                <ul class="checklist">
+                    <li>Connect categories data to Home component</li>
+                    <li>Ensure categories render dynamically from data file</li>
+                    <li>Create FlashcardPage placeholder component</li>
+                    <li>Display "You are in the [Category ID] category" message</li>
+                    <li>Verify routing works between Home and FlashcardPage</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Total Estimated Time: 10-12 hours</h4>
+                    <p>This meets the 10+ hours per week requirement and provides foundation for Sprint 2.</p>
+                </div>
+
+                <h3>Livia's Tasks (Content/QA/Management)</h3>
+
+                <h4>Task 1: Project & GitHub Setup (2-3 hours)</h4>
+                <ul class="checklist">
+                    <li>Create GitHub repository for TalkPlay</li>
+                    <li>Add team members as collaborators</li>
+                    <li>Configure branch protection rules (require PR reviews)</li>
+                    <li>Set up GitHub Projects board</li>
+                    <li>Create Sprint 1 milestone and issues for all tasks</li>
+                </ul>
+
+                <h4>Task 2: Asset Collection - Sprint 1 (2 hours)</h4>
+                <ul class="checklist">
+                    <li>Find high-quality image for Animals category</li>
+                    <li>Find high-quality image for Foods category</li>
+                    <li>Find high-quality image for Toys category</li>
+                    <li>Optimize images (max 800px width, WebP format)</li>
+                    <li>Commit images to repository in /assets folder</li>
+                </ul>
+
+                <h4>Task 3: Asset Collection - Sprint 2 Prep (3 hours)</h4>
+                <ul class="checklist">
+                    <li>Research and identify 30+ flashcard words (10 per category)</li>
+                    <li>Find corresponding images for each word</li>
+                    <li>Create naming convention (e.g., animal-lion.webp)</li>
+                    <li>Organize images in category subfolders</li>
+                    <li>Document image sources and licenses</li>
+                </ul>
+
+                <h4>Task 4: Testing (QA) & Review (3-4 hours)</h4>
+                <ul class="checklist">
+                    <li>Review all team members' pull requests</li>
+                    <li>Test responsive layout on mobile (Chrome DevTools)</li>
+                    <li>Test responsive layout on tablet view</li>
+                    <li>Verify category cards display correctly</li>
+                    <li>Verify category links navigate properly</li>
+                    <li>Test on actual mobile device (iOS or Android)</li>
+                    <li>Document any bugs in GitHub Issues</li>
+                    <li>Coordinate sprint retrospective meeting</li>
+                </ul>
+
+                <div class="info-box">
+                    <h4>Total Estimated Time: 10-12 hours</h4>
+                    <p>This meets the 10+ hours per week requirement and ensures quality delivery.</p>
+                </div>
+
+                <h3>Sprint 1 Dependencies</h3>
+                <div class="warning-box">
+                    <h4>Important</h4>
+                    <p>Andrea's Tasks 2-4 depend on <strong>Amon completing Task 1</strong> (React setup and routing). Design work can proceed in parallel.</p>
+                </div>
+
+                <h3>Testing Checklist</h3>
+                <ul class="checklist">
+                    <li>Works on iPhone (iOS Safari)</li>
+                    <li>Works on Android (Chrome Mobile)</li>
+                    <li>Works on iPad (tablet view)</li>
+                    <li>Works on desktop (Chrome, Safari, Edge)</li>
+                    <li>All buttons are easily tappable (100px)</li>
+                    <li>Colors have sufficient contrast</li>
+                    <li>Text is readable at all sizes (24px minimum)</li>
+                    <li>Gradients render correctly</li>
+                    <li>Hover effects work smoothly</li>
+                    <li>Google Font loads correctly</li>
+                </ul>
+
+                <h3>Files to Create</h3>
+                <div class="code-block">
+                    src/
+                    ├── styles/
+                    │   ├── global.css          <span class="code-comment">← CSS variables, resets</span>
+                    │   ├── components.css      <span class="code-comment">← Shared component styles</span>
+                    │   └── responsive.css      <span class="code-comment">← Media queries</span>
+                    ├── components/
+                    │   ├── Home.jsx            <span class="code-comment">← Home page component</span>
+                    │   ├── Home.css            <span class="code-comment">← Home-specific styles</span>
+                    │   ├── CategoryCard.jsx    <span class="code-comment">← Reusable card component</span>
+                    │   └── CategoryCard.css    <span class="code-comment">← Card styles</span>
+                    ├── data/
+                    │   └── categories.js       <span class="code-comment">← Category data (Amon)</span>
+                    ├── utils/
+                    │   └── storage.js          <span class="comment">← LocalStorage helpers (Amon)</span>
+                    ├── pages/
+                    │   └── FlashcardPage.jsx   <span class="code-comment">← Flashcard placeholder (Amon)</span>
+                    └── assets/
+                        ├── animals.webp        <span class="code-comment">← Category images (Livia)</span>
+                        ├── foods.webp
+                        └── toys.webp
+                </div>
+            </div>
+
+        <!-- FOOTER -->
+        <div class="section">
+            <div class="section-header">
+                <h2>Questions & Support</h2>
+            </div>
+            <p><strong>Team 4 - TalkPlay</strong></p>
+            <ul>
+                <li><strong>Frontend/UI:</strong> Andrea</li>
+                <li><strong>APIs/Logic:</strong> Amon</li>
+                <li><strong>Content/QA/Management:</strong> Livia</li>
+            </ul>
+            <p class="footer-text">For questions about this design system, please reach out via the team Microsoft Teams channel.</p>
+            <p class="footer-version">Document Version 1.0 | Created for Sprint 1 | CSE 499 Senior Project</p>
+        </div>
+    </div>
+</body>
+</html>
