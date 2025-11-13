@@ -1,0 +1,112 @@
+/* ============================================
+    CATEGORY CARD STYLES
+   ============================================ */
+
+    .category-card-link {
+        text-decoration: none;
+        display: block;
+    }
+
+    .category-card {
+        border-radius: 28px;
+        padding: 32px 24px;
+        text-align: center;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        min-height: 280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Hover overlay effect */
+    .category-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .category-card:hover::before {
+        opacity: 1;
+    }
+
+    /* Category-specific gradients */
+    .category-card.animals {
+        background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 100%);
+    }
+
+    .category-card.foods {
+        background: linear-gradient(135deg, #06FFA5 0%, #06D6A0 100%);
+    }
+
+    .category-card.toys {
+        background: linear-gradient(135deg, #8338EC 0%, #FF006E 100%);
+    }
+
+    /* Hover animations */
+    .category-card:hover {
+        transform: translateY(-12px) scale(1.05);
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+    }
+
+    .category-card:active {
+        transform: translateY(-8px) scale(1.02);
+    }
+
+    /* Icon circle */
+    .category-icon {
+        width: 140px;
+        height: 140px;
+        margin: 0 auto 24px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 72px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s ease;
+    }
+
+    .category-card:hover .category-icon {
+        transform: scale(1.1) rotate(5deg);
+        background: rgba(255, 255, 255, 1);
+    }
+
+    /* Category title */
+    .category-title {
+        font-size: 36px;
+        font-weight: 700;
+        color: white;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        margin: 0;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .category-card {
+        padding: 24px 16px;
+        min-height: 240px;
+    }
+    
+    .category-icon {
+        width: 120px;
+        height: 120px;
+        font-size: 60px;
+        margin-bottom: 16px;
+    }
+    
+    .category-title {
+        font-size: 28px;
+    }
+}
