@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, Route, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Welcome from './pages/Welcome.jsx';
 import Home from './pages/Home.jsx';
 import FlashcardPage from "./pages/FlashcardPage.jsx";
 
@@ -8,7 +9,11 @@ import FlashcardPage from "./pages/FlashcardPage.jsx";
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />
+    element: <Welcome />  // Welcome page is the landing page
+  },
+  {
+    path: '/categories',
+    element: <Home />  // Category selection is in categories
   },
   {
     path: '/category/:categoryId',
@@ -21,4 +26,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
   </React.StrictMode>
 )
-

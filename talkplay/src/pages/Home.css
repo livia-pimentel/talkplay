@@ -1,0 +1,94 @@
+/* ============================================
+    HOME PAGE STYLES
+   ============================================ */
+
+.home-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    min-height: 100vh;
+}
+
+/* Header section */
+.home-header {
+    text-align: center;
+    margin-bottom: 48px;
+    }
+
+.home-title {
+    font-size: 64px;
+    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 50%, #FF006E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    font-weight: 700;
+}
+
+.home-subtitle {
+    font-size: 28px;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+/* Category grid */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding: 0 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Responsive breakpoints */
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) and (max-width: 991px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .home-title {
+        font-size: 48px;
+    }
+    
+    .home-subtitle {
+        font-size: 24px;
+    }
+}
+
+    /* Mobile: 1 column */
+    @media (max-width: 767px) {
+    .home-container {
+        padding: 24px 16px;
+    }
+    
+    .home-header {
+        margin-bottom: 32px;
+    }
+    
+    .home-title {
+        font-size: 40px;
+    }
+    
+    .home-subtitle {
+        font-size: 20px;
+    }
+    
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;  /* Change this if needed for mobile card spacing */
+        padding: 0;
+    }
+    }
+/* Extra small mobile */
+@media (max-width: 375px) {
+    .home-title {
+        font-size: 32px;
+    }
+    
+    .home-subtitle {
+        font-size: 18px;
+    }
+}
