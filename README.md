@@ -4,13 +4,13 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 
 ## 📋 Table of Contents
 
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Getting Started](#getting-started)
-- [Project Structure](#project-structure)
-- [Usage](#usage)
-- [Development](#development)
-- [License](#license)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Usage](#-usage)
+- [Development](#-development)
+- [License](#-license)
 
 ## ✨ Features
 
