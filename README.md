@@ -8,7 +8,7 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 - [Tech Stack](#️-tech-stack)
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
-- [Usage](#-usage)
+- [Usage] (#-usage)
 - [Development](#-development)
 - [License](#-license)
 
@@ -83,6 +83,7 @@ npm run preview
 
 ## 📁 Project Structure
 
+`````markdown
 talkplay/
 ├── docs/                          # Documentation files
 │   └── design-document.html
@@ -100,7 +101,7 @@ talkplay/
 │   │   │   └── CategoryCard.css
 │   │   ├── data/
 │   │   │   ├── categories.js      # Category definitions
-│   │   │   └── fashcards.js       # 30 flashcard data entries
+│   │   │   └── flashcards.js      # 30 flashcard data entries
 │   │   ├── pages/
 │   │   │   ├── Welcome.jsx        # Landing page
 │   │   │   ├── Home.jsx           # Category selection page
@@ -116,6 +117,7 @@ talkplay/
 │   ├── vite.config.js
 │   └── eslint.config.js
 └── README.md
+```
 
 ## 🎮 Usage
 
@@ -128,11 +130,13 @@ talkplay/
 
 ### Navigation Flow
 
+`````text
 Welcome Page (/)
-    ↓
+         ↓
 Category Selection (/categories)
-    ↓
+         ↓
 Flashcard Practice (/category/:categoryId)
+`````
 
 ## 💻 Development
 
