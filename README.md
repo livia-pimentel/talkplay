@@ -47,25 +47,25 @@ git clone https://github.com/livia-pimentel/talkplay.git
 cd talkplay
 ```
 
-1. Navigate to the project directory:
+2. Navigate to the project directory:
 
 ```bash
 cd talkplay
 ```
 
-1. Install dependencies:
+3. Install dependencies:
 
 ```bash
 npm install
 ```
 
-1. Start the development server:
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-1. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
+5. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
 
 ### Build for Production
 
@@ -83,6 +83,7 @@ npm run preview
 
 ## 📁 Project Structure
 
+```
 talkplay/
 ├── docs/                          # Documentation files
 │   └── design-document.html
@@ -100,7 +101,7 @@ talkplay/
 │   │   │   └── CategoryCard.css
 │   │   ├── data/
 │   │   │   ├── categories.js      # Category definitions
-│   │   │   └── fashcards.js       # 30 flashcard data entries
+│   │   │   └── flashcards.js      # 30 flashcard data entries
 │   │   ├── pages/
 │   │   │   ├── Welcome.jsx        # Landing page
 │   │   │   ├── Home.jsx           # Category selection page
@@ -116,6 +117,7 @@ talkplay/
 │   ├── vite.config.js
 │   └── eslint.config.js
 └── README.md
+```
 
 ## 🎮 Usage
 
@@ -128,11 +130,13 @@ talkplay/
 
 ### Navigation Flow
 
+```
 Welcome Page (/)
-    ↓
+         ↓
 Category Selection (/categories)
-    ↓
+         ↓
 Flashcard Practice (/category/:categoryId)
+```
 
 ## 💻 Development
 
