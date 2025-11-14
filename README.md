@@ -8,7 +8,7 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 - [Tech Stack](#️-tech-stack)
 - [Getting Started](#-getting-started)
 - [Project Structure](#-project-structure)
-- [Usage] (#-usage)
+- [Usage](#-usage)
 - [Development](#-development)
 - [License](#-license)
 
@@ -47,25 +47,25 @@ git clone https://github.com/livia-pimentel/talkplay.git
 cd talkplay
 ```
 
-1. Navigate to the project directory:
+2. Navigate to the project directory:
 
 ```bash
 cd talkplay
 ```
 
-1. Install dependencies:
+3. Install dependencies:
 
 ```bash
 npm install
 ```
 
-1. Start the development server:
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-1. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
+5. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
 
 ### Build for Production
 
@@ -83,7 +83,7 @@ npm run preview
 
 ## 📁 Project Structure
 
-`````markdown
+```
 talkplay/
 ├── docs/                          # Documentation files
 │   └── design-document.html
@@ -130,13 +130,13 @@ talkplay/
 
 ### Navigation Flow
 
-`````text
+```
 Welcome Page (/)
          ↓
 Category Selection (/categories)
          ↓
 Flashcard Practice (/category/:categoryId)
-`````
+```
 
 ## 💻 Development
 
