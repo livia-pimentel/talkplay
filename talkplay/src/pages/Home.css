@@ -43,11 +43,13 @@
 
 /* Responsive breakpoints */
 
-/* Tablet: 2 columns */
-@media (min-width: 768px) and (max-width: 991px) {
-    .category-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Tablet: Keep 3 columns like desktop */
+    @media (min-width: 768px) and (max-width: 991px) {
+        .category-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;  /* Slightly smaller gap for tablet */
+            max-width: 900px;  /* Constrain width so cards don't get too big */
+        }
     
     .home-title {
         font-size: 48px;

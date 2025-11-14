@@ -15,7 +15,7 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 ## ✨ Features
 
 - **Interactive Flashcards**: Visual learning with colorful images across three categories
-- **Three Learning Categories**: 
+- **Three Learning Categories**:
   - 🦁 Animals (10 flashcards)
   - 🍎 Foods (10 flashcards)
   - 🧸 Toys (10 flashcards)
@@ -41,27 +41,31 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/livia-pimentel/talkplay.git
 cd talkplay
 ```
 
-2. Navigate to the project directory:
+1. Navigate to the project directory:
+
 ```bash
 cd talkplay
 ```
 
-3. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-4. Start the development server:
+1. Start the development server:
+
 ```bash
 npm run dev
 ```
 
-5. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
+1. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
 
 ### Build for Production
 
@@ -79,7 +83,6 @@ npm run preview
 
 ## 📁 Project Structure
 
-```
 talkplay/
 ├── docs/                          # Documentation files
 │   └── design-document.html
@@ -113,7 +116,6 @@ talkplay/
 │   ├── vite.config.js
 │   └── eslint.config.js
 └── README.md
-```
 
 ## 🎮 Usage
 
@@ -126,13 +128,11 @@ talkplay/
 
 ### Navigation Flow
 
-```
-Welcome Page (/) 
+Welcome Page (/)
     ↓
 Category Selection (/categories)
     ↓
 Flashcard Practice (/category/:categoryId)
-```
 
 ## 💻 Development
 
@@ -146,12 +146,14 @@ Flashcard Practice (/category/:categoryId)
 
 ### Adding New Content
 
-#### Adding a New Category:
+#### Adding a New Category
+
 1. Add category definition in `src/data/categories.js`
 2. Add category icon to `src/assets/images/categories/`
 3. Create flashcards in `src/data/fashcards.js` with matching category ID
 
-#### Adding New Flashcards:
+#### Adding New Flashcards
+
 1. Add image to appropriate category folder in `src/assets/images/`
 2. Import image in `src/data/fashcards.js`
 3. Add new flashcard object to `allFlashcards` array
