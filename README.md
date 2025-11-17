@@ -154,12 +154,12 @@ Flashcard Practice (/category/:categoryId)
 
 1. Add category definition in `src/data/categories.js`
 2. Add category icon to `src/assets/images/categories/`
-3. Create flashcards in `src/data/fashcards.js` with matching category ID
+3. Create flashcards in `src/data/flashcards.js` with matching category ID
 
 #### Adding New Flashcards
 
 1. Add image to appropriate category folder in `src/assets/images/`
-2. Import image in `src/data/fashcards.js`
+2. Import image in `src/data/flashcards.js`
 3. Add new flashcard object to `allFlashcards` array
 
 ## 📄 License
