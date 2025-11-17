@@ -1,6 +1,9 @@
 # TalkPlay 🗣️
 
-TalkPlay is a free, interactive web application designed to help children aged 3-5 with speech development delays. It makes daily pronunciation practice engaging through interactive flashcards, allowing parents to support and track their child's progress at home.
+TalkPlay is a free, interactive web application designed to help children
+aged 3-5 with speech development delays. It makes daily pronunciation
+practice engaging through interactive flashcards, allowing parents to
+support and track their child's progress at home.
 
 ## 📋 Table of Contents
 
@@ -20,7 +23,8 @@ TalkPlay is a free, interactive web application designed to help children aged 3
   - 🍎 Foods (10 flashcards)
   - 🧸 Toys (10 flashcards)
 - **Child-Friendly Interface**: Colorful, animated UI designed for young children
-- **Easy Navigation**: Simple routing between welcome, category selection, and flashcard pages
+- **Easy Navigation**: Simple routing between welcome, category selection,
+  and flashcard pages
 - **Responsive Design**: Works across different devices and screen sizes
 - **Progress Tracking**: Local storage for tracking learning progress (in development)
 
@@ -42,30 +46,25 @@ TalkPlay is a free, interactive web application designed to help children aged 3
 
 1. Clone the repository:
 
-```bash
-git clone https://github.com/livia-pimentel/talkplay.git
-cd talkplay
-```
+   ```bash
+   git clone https://github.com/livia-pimentel/talkplay.git
+   cd talkplay
+   ```
 
-1. Navigate to the project directory:
+2. Install dependencies:
 
-```bash
-cd talkplay
-```
+   ```bash
+   npm install
+   ```
 
-1. Install dependencies:
+3. Start the development server:
 
-```bash
-npm install
-```
+   ```bash
+   npm run dev
+   ```
 
-1. Start the development server:
-
-```bash
-npm run dev
-```
-
-1. Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal)
+4. Open your browser and navigate to `http://localhost:5173`
+   (or the port shown in your terminal)
 
 ### Build for Production
 
@@ -83,6 +82,7 @@ npm run preview
 
 ## 📁 Project Structure
 
+```text
 talkplay/
 ├── docs/                          # Documentation files
 │   └── design-document.html
@@ -100,7 +100,7 @@ talkplay/
 │   │   │   └── CategoryCard.css
 │   │   ├── data/
 │   │   │   ├── categories.js      # Category definitions
-│   │   │   └── fashcards.js       # 30 flashcard data entries
+│   │   │   └── flashcards.js      # 30 flashcard data entries
 │   │   ├── pages/
 │   │   │   ├── Welcome.jsx        # Landing page
 │   │   │   ├── Home.jsx           # Category selection page
@@ -116,6 +116,7 @@ talkplay/
 │   ├── vite.config.js
 │   └── eslint.config.js
 └── README.md
+```
 
 ## 🎮 Usage
 
@@ -124,15 +125,18 @@ talkplay/
 1. **Welcome Screen**: Start by clicking "Start Playing!" on the welcome screen
 2. **Choose a Category**: Select from Animals, Foods, or Toys
 3. **Practice Words**: View flashcards with images and practice pronunciation
-4. **Track Progress**: The app will remember which words have been practiced (feature in development)
+4. **Track Progress**: The app will remember which words have been practiced
+   (feature in development)
 
 ### Navigation Flow
 
+```text
 Welcome Page (/)
-    ↓
+         ↓
 Category Selection (/categories)
-    ↓
+         ↓
 Flashcard Practice (/category/:categoryId)
+```
 
 ## 💻 Development
 
@@ -150,12 +154,12 @@ Flashcard Practice (/category/:categoryId)
 
 1. Add category definition in `src/data/categories.js`
 2. Add category icon to `src/assets/images/categories/`
-3. Create flashcards in `src/data/fashcards.js` with matching category ID
+3. Create flashcards in `src/data/flashcards.js` with matching category ID
 
 #### Adding New Flashcards
 
 1. Add image to appropriate category folder in `src/assets/images/`
-2. Import image in `src/data/fashcards.js`
+2. Import image in `src/data/flashcards.js`
 3. Add new flashcard object to `allFlashcards` array
 
 ## 📄 License
