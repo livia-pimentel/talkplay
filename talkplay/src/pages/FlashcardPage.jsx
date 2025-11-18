@@ -8,10 +8,12 @@ import { useParams, Link } from 'react-router-dom';
 import Flashcard from '../components/Flashcard';
 import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
+import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
 import './FlashcardPage.css';
 
 export default function FlashcardPage() {
     const { categoryId } = useParams();
+    const { speak } = useSpeechSynthesis();
     
     // Get category info
     const category = categories.find(cat => cat.id === categoryId);
@@ -84,8 +86,7 @@ export default function FlashcardPage() {
 
     // Placeholder for audio functions (Amon will implement)
     const handleListen = () => {
-        console.log('Listen:', currentCard.word);
-        // Amon's audio hook will go here
+        speak(currentCard.word);
     };
     
     const handleRecord = () => {
