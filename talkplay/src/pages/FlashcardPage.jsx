@@ -9,11 +9,13 @@ import Flashcard from '../components/Flashcard';
 import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
 import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
+import { useAudioRecorder } from '../utils/useAudioRecorder';
 import './FlashcardPage.css';
 
 export default function FlashcardPage() {
     const { categoryId } = useParams();
     const { speak } = useSpeechSynthesis();
+    const { isRecording, startRecording, stopRecording, playRecording } = useAudioRecorder();
     
     // Get category info
     const category = categories.find(cat => cat.id === categoryId);
@@ -25,7 +27,6 @@ export default function FlashcardPage() {
     
     // State
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
-    const [isRecording, setIsRecording] = useState(false);
     const [showEncouragement, setShowEncouragement] = useState(false);
     
     // Get current flashcard
@@ -90,14 +91,15 @@ export default function FlashcardPage() {
     };
     
     const handleRecord = () => {
-        setIsRecording(!isRecording);
-        console.log('Record:', currentCard.word);
-        // Amon's audio hook will go here
+        if (isRecording) {
+            stopRecording();
+        } else {
+            startRecording();
+        }
     };
     
     const handlePlay = () => {
-        console.log('Play recording:', currentCard.word);
-        // Amon's audio hook will go here
+        playRecording();
     };
     
     // If category doesn't exist or has no flashcards
