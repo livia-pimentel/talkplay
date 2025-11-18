@@ -1,0 +1,114 @@
+/* ============================================
+    FLASHCARD COMPONENT STYLES
+   ============================================ */
+
+.flashcard {
+    background: white;
+    border-radius: 32px;
+    padding: 48px;
+    max-width: 500px;
+    margin: 0 auto;
+    border: 5px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+/* Rainbow border effect */
+.flashcard::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, 
+        #FFBE0B, #FB5607, #FF006E, #8338EC, #3A86FF
+    );
+    border-radius: 32px;
+    z-index: -1;
+}
+
+.flashcard:hover {
+    transform: scale(1.02) translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+}
+
+/* Recording state - pulsing animation */
+.flashcard.recording {
+    animation: pulse-card 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-card {
+    0%, 100% {
+        box-shadow: 0 12px 40px rgba(255, 0, 110, 0.4);
+    }
+    50% {
+        box-shadow: 0 16px 50px rgba(255, 0, 110, 0.8);
+    }
+}
+
+.flashcard-image-container {
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 4px solid white;
+    overflow: hidden;
+}
+
+.flashcard-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.flashcard-word {
+    font-size: 64px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #FB5607 0%, #FF006E 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin: 0;
+    color: transparent;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .flashcard {
+        padding: 32px 24px;
+        max-width: 100%;
+    }
+    
+    .flashcard-image-container {
+        height: 240px;
+        margin-bottom: 24px;
+    }
+    
+    .flashcard-word {
+        font-size: 48px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard {
+        padding: 24px 16px;
+    }
+    
+    .flashcard-image-container {
+        height: 200px;
+    }
+    
+    .flashcard-word {
+        font-size: 40px;
+    }
+}

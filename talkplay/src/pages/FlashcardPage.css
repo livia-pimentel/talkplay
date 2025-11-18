@@ -1,0 +1,344 @@
+/* ============================================
+    FLASHCARD PAGE STYLES
+   ============================================ */
+
+.flashcard-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF5 100%);
+    padding: 24px;
+}
+
+.flashcard-page-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===== HEADER SECTION ===== */
+.flashcard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 0;
+}
+
+.back-button {
+    background: linear-gradient(135deg, #8338EC, #FF006E);
+    border: none;
+    border-radius: 16px;
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: 'Fredoka', sans-serif;
+    box-shadow: 0 4px 16px rgba(131, 56, 236, 0.3);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.back-button:hover {
+    transform: translateX(-6px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(131, 56, 236, 0.5);
+}
+
+.back-button:active {
+    transform: translateX(-3px) scale(1.0);
+}
+
+/* ===== PROGRESS BAR ===== */
+.progress-bar-container {
+    flex: 1;
+    min-width: 200px;
+    max-width: 100%;
+}
+
+.progress-label {
+    font-size: 16px;
+    color: #2D3748;
+    margin-bottom: 8px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 3px solid white;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #06FFA5 0%, #06D6A0 50%, #3A86FF 100%);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 16px;
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    transition: width 0.5s ease;
+}
+
+/* ===== MAIN CONTENT ===== */
+.flashcard-main {
+    text-align: center;
+}
+
+/* ===== CONTROL BUTTONS ===== */
+.flashcard-controls {
+    display: flex;
+    gap: 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 32px;
+}
+
+.control-button-wrapper {
+    text-align: center;
+}
+
+.control-button {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 5px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    background: none;
+}
+
+.control-button:hover {
+    transform: scale(1.2) rotate(8deg);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+}
+
+.control-button:active {
+    transform: scale(0.95);
+}
+
+.control-button.listen {
+    background: linear-gradient(135deg, #3A86FF, #5B9FFF);
+}
+
+.control-button.record {
+    background: linear-gradient(135deg, #FF006E, #FF3385);
+}
+
+.control-button.record.recording {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 8px 24px rgba(255, 0, 110, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 12px 40px rgba(255, 0, 110, 0.8);
+        transform: scale(1.05);
+    }
+}
+
+.control-button.play {
+    background: linear-gradient(135deg, #06FFA5, #33FFB8);
+}
+
+.control-label {
+    font-size: 18px;
+    color: #2D3748;
+    margin-top: 12px;
+    font-weight: 700;
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.flashcard-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.nav-button {
+    background: linear-gradient(135deg, #06D6A0, #3A86FF);
+    border: none;
+    border-radius: 16px;
+    padding: 16px 32px;
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    box-shadow: 0 4px 16px rgba(6, 214, 160, 0.3);
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.nav-button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 24px rgba(6, 214, 160, 0.5);
+}
+
+.nav-button:active {
+    transform: translateY(-2px) scale(1.0);
+}
+
+.nav-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-button:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(6, 214, 160, 0.3);
+}
+
+/* ===== ENCOURAGEMENT MESSAGE ===== */
+.encouragement-message {
+    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 50%, #FF006E 100%);
+    color: white;
+    padding: 20px 32px;
+    border-radius: 24px;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    box-shadow: 0 8px 28px rgba(255, 0, 110, 0.4);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 32px;
+    transition: all 0.3s ease;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+.encouragement-message:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 36px rgba(255, 0, 110, 0.6);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .flashcard-page {
+        padding: 16px;
+    }
+    
+    .flashcard-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+    
+    .back-button {
+        width: auto;
+        align-self: flex-start;
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+    
+    .progress-bar-container {
+        width: 100%;
+        min-width: 100%;
+    }
+    
+    .progress-label {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .progress-bar {
+        height: 32px;
+    }
+    
+    .progress-fill {
+        font-size: 16px;
+        padding-right: 12px;
+    }
+    
+    .control-button {
+        width: 90px;
+        height: 90px;
+        font-size: 42px;
+    }
+    
+    .control-label {
+        font-size: 16px;
+    }
+    
+    .encouragement-message {
+        font-size: 20px;
+        padding: 18px 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .flashcard-page {
+        padding: 12px;
+    }
+    
+    .flashcard-header {
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .back-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .progress-label {
+        font-size: 13px;
+    }
+    
+    .progress-bar {
+        height: 28px;
+    }
+    
+    .progress-fill {
+        font-size: 14px;
+        padding-right: 10px;
+    }
+    
+    .control-button {
+        width: 75px;
+        height: 75px;
+        font-size: 32px;
+    }
+    
+    .flashcard-controls {
+        gap: 16px;
+    }
+    
+    .control-label {
+        font-size: 14px;
+    }
+    
+    .nav-button {
+        padding: 12px 20px;
+        font-size: 14px;
+        min-width: 100px;
+    }
+    
+    .encouragement-message {
+        font-size: 18px;
+        padding: 14px 20px;
+    }
+}
