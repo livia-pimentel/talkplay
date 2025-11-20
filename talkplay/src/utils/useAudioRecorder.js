@@ -141,7 +141,11 @@ export function useAudioRecorder() {
             console.error('Error requesting microphone permission:', error);
             setHasPermission(false);
             if (error.name === 'NotAllowedError') {
-                showToast('🎤 Oops! Your microphone is being shy! 😊 Ask a grown-up to help you turn it on in the browser settings.', 'error', true);
+                showToast(
+                    "🎤 Uh-oh! I can't hear you! 🙉\n\nPlease call a grown-up to help!\n\n(Parents: Please enable microphone access in browser settings)", 
+                    'error', 
+                    true
+                );
             } else if (error.name === 'NotFoundError') {
                 showToast('🎤 Hmm, we can\'t find your microphone! 🔍 Make sure your computer has one plugged in!', 'error', true);
             } else {
