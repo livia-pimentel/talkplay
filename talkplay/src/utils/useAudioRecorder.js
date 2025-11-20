@@ -194,7 +194,7 @@ export function useAudioRecorder() {
             setIsRecording(true);
             setToast(null);
         }
-    }, [hasPermission, requestPermission]);
+    }, [hasPermission, requestPermission, showToast]);
 
     /**
      * Stop recording audio
