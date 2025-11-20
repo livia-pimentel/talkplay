@@ -176,6 +176,14 @@
     color: transparent;
 }
 
+/* Hover */
+.flashcard:hover .flashcard-word {
+    background: white;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .flashcard {
