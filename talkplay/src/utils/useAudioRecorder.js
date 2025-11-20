@@ -115,9 +115,17 @@ export function useAudioRecorder() {
     const [isRecording, setIsRecording] = useState(false);
     const [audioUrl, setAudioUrl] = useState(null);
     const [hasPermission, setHasPermission] = useState(false);
+    const [toast, setToast] = useState(null);
     const mediaRecorderRef = useRef(null);
     const streamRef = useRef(null);
     const chunksRef = useRef([]);
+
+    const showToast = useCallback((message, type = 'error', persistent = false) => {
+        setToast({ message, type, persistent });
+        if (!persistent) {
+            setTimeout(() => setToast(null), 10000);
+        }
+    }, []);
 
     /**
      * Request microphone permission
@@ -132,9 +140,16 @@ export function useAudioRecorder() {
         } catch (error) {
             console.error('Error requesting microphone permission:', error);
             setHasPermission(false);
+            if (error.name === 'NotAllowedError') {
+                showToast('🎤 Oops! Your microphone is being shy! 😊 Ask a grown-up to help you turn it on in the browser settings.', 'error', true);
+            } else if (error.name === 'NotFoundError') {
+                showToast('🎤 Hmm, we can\'t find your microphone! 🔍 Make sure your computer has one plugged in!', 'error', true);
+            } else {
+                showToast('🎤 Oh no! We\'re having trouble with your microphone! 😅 Try unplugging and plugging it back in!', 'error', true);
+            }
             return false;
         }
-    }, []);
+    }, [showToast]);
 
     /**
      * Start recording audio
@@ -166,12 +181,14 @@ export function useAudioRecorder() {
                     console.error('Error trimming silence:', error);
                     const url = URL.createObjectURL(blob);
                     setAudioUrl(url);
+                    showToast('⚙️ Hmm, something technical got mixed up! 🧩 Ask a parent or teacher to help check the app!', 'error', true);
                 }
                 setIsRecording(false);
             };
 
             mediaRecorder.start();
             setIsRecording(true);
+            setToast(null);
         }
     }, [hasPermission, requestPermission]);
 
@@ -186,6 +203,13 @@ export function useAudioRecorder() {
             }
         }
     }, [isRecording]);
+
+    /**
+     * Clear the current toast
+     */
+    const clearToast = useCallback(() => {
+        setToast(null);
+    }, []);
 
     /**
      * Play the recorded audio
@@ -204,6 +228,9 @@ export function useAudioRecorder() {
         requestPermission,
         startRecording,
         stopRecording,
-        playRecording
+        playRecording,
+        toast,
+        clearToast,
+        showToast
     };
 }
