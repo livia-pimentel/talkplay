@@ -34,6 +34,21 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Ensure all elements use Fredoka font */
+  * {
+      font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+  }
+
+  /* Standardize button fonts */
+  button, .btn, .start-button, .back-button, .nav-button, .control-button {
+      font-family: 'Fredoka', 'Comic Sans MS', sans-serif !important;
+  }
+
+  /* Standardize heading fonts */
+  h1, h2, h3, h4, h5, h6 {
+      font-family: 'Fredoka', 'Comic Sans MS', sans-serif !important;
+  }
+
   #root {
     min-height: 100vh;
     margin: 0;

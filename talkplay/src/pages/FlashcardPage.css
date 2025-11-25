@@ -5,12 +5,15 @@
 .flashcard-page {
     min-height: 100vh;
     background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF5 100%);
-    padding: 24px;
+    padding: 16px 24px;
+    overflow-x: hidden; 
+    position: relative;
 }
 
 .flashcard-page-container {
     max-width: 1000px;
     margin: 0 auto;
+    overflow-x: hidden;
 }
 
 /* ===== HEADER SECTION ===== */
@@ -43,15 +46,16 @@
     text-decoration: none;
     white-space: nowrap;
     flex-shrink: 0;
+    position: relative;
 }
 
 .back-button:hover {
-    transform: translateX(-6px) scale(1.05);
+    transform: scale(1.05);
     box-shadow: 0 8px 24px rgba(131, 56, 236, 0.5);
 }
 
 .back-button:active {
-    transform: translateX(-3px) scale(1.0);
+    transform: scale(1.0);
 }
 
 /* ===== PROGRESS BAR ===== */
@@ -133,6 +137,9 @@
 
 .control-button:active {
     transform: scale(0.95);
+    filter: brightness(0.9);
+    transition: all 0.1s ease;
+
 }
 
 .control-button.listen {
@@ -364,6 +371,7 @@
     opacity: 0.5;
     cursor: not-allowed;
     transform: none;
+    filter: grayscale(40%);
 }
 
 .nav-button:disabled:hover {

@@ -1,0 +1,212 @@
+/* ============================================
+    CELEBRATION MODAL STYLES
+   ============================================ */
+
+.celebration-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(255, 190, 11, 0.9) 0%, 
+        rgba(251, 86, 7, 0.9) 25%, 
+        rgba(255, 0, 110, 0.9) 50%, 
+        rgba(131, 56, 236, 0.9) 75%, 
+        rgba(58, 134, 255, 0.9) 100%);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.celebration-modal {
+    position: relative;
+    background: linear-gradient(135deg, var(--yellow) 0%, var(--orange) 50%, var(--pink) 100%);
+    padding: 60px 40px;
+    border-radius: 32px;
+    border: 8px solid white;
+    box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    animation: bounceIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    overflow: hidden;
+}
+
+.celebration-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #FF006E;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.celebration-close:hover {
+    background: white;
+    transform: scale(1.1) rotate(90deg);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.celebration-close:active {
+    transform: scale(0.95) rotate(90deg);
+}
+
+@keyframes bounceIn {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.celebration-content {
+    position: relative;
+    z-index: 10;
+}
+
+.celebration-message {
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    margin-bottom: 16px;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+.celebration-subtext {
+    font-size: 24px;
+    color: white;
+    font-weight: 600;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Confetti Animation */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    border-radius: 50%;
+    animation: confettiFall 3s linear forwards;
+}
+
+/* Use different colors from palette */
+.confetti:nth-child(6n+1) { background: var(--yellow); }
+.confetti:nth-child(6n+2) { background: var(--orange); }
+.confetti:nth-child(6n+3) { background: var(--pink); }
+.confetti:nth-child(6n+4) { background: var(--purple); }
+.confetti:nth-child(6n+5) { background: var(--blue); }
+.confetti:nth-child(6n+6) { background: var(--green); }
+
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(500px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .celebration-modal {
+        padding: 40px 24px;
+        width: 85%;
+        max-width: 400px;
+    }
+    
+    .celebration-message {
+        font-size: 32px;
+    }
+    
+    .celebration-subtext {
+        font-size: 18px;
+    }
+    
+    .celebration-close {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+        top: 12px;
+        right: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .celebration-modal {
+        padding: 32px 20px;
+        width: 80%;
+        max-width: 320px;
+    }
+    
+    .celebration-message {
+        font-size: 24px;
+    }
+    
+    .celebration-subtext {
+        font-size: 16px;
+    }
+    
+    .confetti {
+        width: 8px;
+        height: 8px;
+    }
+}
