@@ -3,9 +3,12 @@
     Interactive flashcard practice page
    ============================================ */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, startTransition } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Flashcard from '../components/Flashcard';
+import CelebrationModal from '../components/CelebrationModal';
+import CompletionCelebration from '../components/CompletionCelebration';
+import ProgressBar from '../components/ProgressBar';
 import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
 import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
@@ -25,11 +28,15 @@ export default function FlashcardPage() {
         card => card.category === categoryId
     );
     
-    // State
-    const [currentWordIndex, setCurrentWordIndex] = useState(0);
-    const [showEncouragement, setShowEncouragement] = useState(false);
+    // State - Load saved position from localStorage
+    const [currentWordIndex, setCurrentWordIndex] = useState(() => {
+        const saved = localStorage.getItem(`talkplay-progress-${categoryId}`);
+        return saved ? parseInt(saved, 10) : 0;
+    });
     const [isPlaying, setIsPlaying] = useState(false);
     const [waveAnimation, setWaveAnimation] = useState({ type: null, direction: null });
+    const [showCelebration, setShowCelebration] = useState(false);
+    const [showCompletion, setShowCompletion] = useState(false);
     const audioRef = useRef(null);
     
     const triggerWave = (type, direction) => {
@@ -49,20 +56,19 @@ export default function FlashcardPage() {
     
     // Navigation handlers
     const goToNext = () => {
-    if (currentWordIndex < categoryFlashcards.length - 1) {
-        setShowEncouragement(true); // Show encouragement when moving forward
-        setCurrentWordIndex(currentWordIndex + 1);
-        
-        // Hide encouragement after 3 seconds
-        setTimeout(() => {
-        setShowEncouragement(false);
-        }, 3000);
-    }
+        // If not on the last card, show celebration and move to next
+        if (currentWordIndex < categoryFlashcards.length - 1) {
+            setShowCelebration(true); // Show celebration modal
+            setCurrentWordIndex(currentWordIndex + 1);
+        } 
+        // If on the last card, show completion celebration
+        else if (currentWordIndex === categoryFlashcards.length - 1) {
+            setShowCompletion(true);
+        }
     };
 
     const goToPrevious = () => {
     if (currentWordIndex > 0) {
-        setShowEncouragement(false); // Hide when going back
         setCurrentWordIndex(currentWordIndex - 1);
     }       
     };
@@ -72,17 +78,12 @@ export default function FlashcardPage() {
         const handleKeyPress = (e) => {
             if (e.key === 'ArrowRight') {
                 if (currentWordIndex < categoryFlashcards.length - 1) {
-                    setShowEncouragement(true);
+                    setShowCelebration(true); // Show celebration modal instead
                     setCurrentWordIndex(currentWordIndex + 1);
-                    
-                    setTimeout(() => {
-                        setShowEncouragement(false);
-                    }, 3000);
                 }
             }
             if (e.key === 'ArrowLeft') {
                 if (currentWordIndex > 0) {
-                    setShowEncouragement(false);
                     setCurrentWordIndex(currentWordIndex - 1);
                 }
             }
@@ -109,12 +110,22 @@ export default function FlashcardPage() {
             document.removeEventListener('click', handleClickOutside);
         };
     }, [isRecording, stopRecording]);
+
+        // Reset state when category changes
+        useEffect(() => {
+            startTransition(() => {
+                setCurrentWordIndex(0);
+                setShowCelebration(false);
+                setShowCompletion(false);
+                setIsPlaying(false);
+            });
+        }, [categoryId]);
+
+        // Save progress to localStorage whenever card changes
+        useEffect(() => {
+            localStorage.setItem(`talkplay-progress-${categoryId}`, currentWordIndex.toString());
+        }, [currentWordIndex, categoryId]);
     
-    useEffect(() => {
-        if (isPlaying) {
-            triggerWave('play', 'outward');
-        }
-    }, [isPlaying]);
 
     const handleListen = async () => {
         triggerWave('listen', 'outward');
@@ -214,17 +225,11 @@ export default function FlashcardPage() {
             </Link>
             
             <div className="progress-bar-container">
-                <div className="progress-bar">
-                <div 
-                    className="progress-fill" 
-                    style={{ width: `${progress.percentage}%` }}
-                >
-                    {progress.percentage}%
-                </div>
-                </div>
-                <div className="progress-label">
-                Progress: {progress.current} of {progress.total} words completed
-                </div>
+                <ProgressBar 
+                    current={progress.current}
+                    total={progress.total}
+                    percentage={progress.percentage}
+                />
             </div>
             </div>
             
@@ -286,18 +291,11 @@ export default function FlashcardPage() {
                 <button 
                 className="nav-button" 
                 onClick={goToNext}
-                disabled={currentWordIndex === categoryFlashcards.length - 1}
                 >
-                Next →
+                {currentWordIndex === categoryFlashcards.length - 1 ? 'Finish! 🎉' : 'Next →'}
                 </button>
             </div>
-            
-            {/* Encouragement Message - Show after completing a word */}
-            {showEncouragement && (
-                <div className="encouragement-message">
-                    Amazing work! Keep going! 
-                </div>
-            )}
+    
 
             {/* Toast Notification */}
             {toast && (
@@ -316,6 +314,26 @@ export default function FlashcardPage() {
                     )}
                 </div>
             )}
+
+           {/* Celebration Modal */}
+            <CelebrationModal 
+                show={showCelebration}
+                onClose={() => setShowCelebration(false)}
+            />
+
+        {/* Completion Celebration - All cards done */}
+        <CompletionCelebration 
+            show={showCompletion}
+            categoryName={category.name}
+            currentCategoryId={categoryId}
+            totalCards={categoryFlashcards.length}
+            onClose={() => {
+                setShowCompletion(false);
+                setCurrentWordIndex(0);
+                // Clear saved progress when restarting
+                localStorage.setItem(`talkplay-progress-${categoryId}`, '0');
+            }}
+        />
             </div>
             
         </div>

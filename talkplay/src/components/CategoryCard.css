@@ -57,10 +57,13 @@
     .category-card:hover {
         transform: translateY(-12px) scale(1.05);
         box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+        filter: brightness(1.05);
     }
 
     .category-card:active {
         transform: translateY(-8px) scale(1.02);
+        filter: brightness(0.95); 
+        transition: all 0.1s ease; 
     }
 
     /* Icon circle */

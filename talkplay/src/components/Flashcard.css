@@ -158,6 +158,8 @@
     overflow: hidden;
 }
 
+
+
 .flashcard-image {
     max-width: 90%;
     max-height: 90%;
@@ -212,5 +214,17 @@
     
     .flashcard-word {
         font-size: 40px;
+    }
+}
+
+/* Reduce height on large screens to prevent scrolling */
+@media (min-width: 1024px) {
+    .flashcard-image-container {
+        height: 280px;
+        margin-bottom: 24px;
+    }
+    
+    .flashcard {
+        padding: 40px;
     }
 }
