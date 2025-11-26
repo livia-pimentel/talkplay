@@ -4,7 +4,7 @@
    ============================================ */
 
 import React from 'react';
-import './ProgressBar.css';
+import '../styles/ProgressBar.css';
 
 export default function ProgressBar({ current, total, percentage, label }) {
     return (

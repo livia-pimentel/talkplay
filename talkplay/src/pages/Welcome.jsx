@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './Welcome.css';
+import '../styles/Welcome.css';
 
 export default function Welcome() {
     return (

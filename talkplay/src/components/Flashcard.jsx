@@ -1,11 +1,3 @@
-/* ============================================
-    FLASHCARD COMPONENT
-    Reusable flashcard display with image and word
-   ============================================ */
-
-import React from 'react';
-import './Flashcard.css';
-
 export default function Flashcard({ word, image, isRecording, isPlaying, waveAnimation }) {
     const getWaveClass = () => {
         if (!waveAnimation || !waveAnimation.type) return '';
