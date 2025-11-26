@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import './styles/index.css';
 import Welcome from './pages/Welcome.jsx';
 import Home from './pages/Home.jsx';
 import FlashcardPage from "./pages/FlashcardPage.jsx";

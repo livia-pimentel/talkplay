@@ -5,7 +5,7 @@
 
 import React from 'react';
 import CategoryCard from '../components/CategoryCard';
-import './Home.css';
+import '../styles/Home.css';
 import { categories } from '../data/categories';
 
 

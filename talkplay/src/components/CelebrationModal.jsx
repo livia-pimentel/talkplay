@@ -4,7 +4,7 @@
    ============================================ */
 
 import React, { useEffect, useState, startTransition } from 'react';
-import './CelebrationModal.css';
+import '../styles/CelebrationModal.css';
 
 const celebrationMessages = [
     "🌟 Super Star! 🌟",

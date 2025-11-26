@@ -11,13 +11,15 @@ import CompletionCelebration from '../components/CompletionCelebration';
 import ProgressBar from '../components/ProgressBar';
 import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
-import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
 import { useAudioRecorder } from '../utils/useAudioRecorder';
-import './FlashcardPage.css';
+import { saveProgress, getCategoryCompletion, clearCategoryProgress, getCurrentIndex, saveCurrentIndex } from '../utils/storage';
+import '../styles/Flashcard.css';
+import '../styles/FlashcardAnimations.css';
+import '../styles/Toast.css';
+import '../styles/FlashcardMobile.css';
 
 export default function FlashcardPage() {
     const { categoryId } = useParams();
-    const { speak } = useSpeechSynthesis();
     const { isRecording, startRecording, stopRecording, audioUrl, toast, clearToast, showToast } = useAudioRecorder();
     
     // Get category info
@@ -29,33 +31,23 @@ export default function FlashcardPage() {
     );
     
     // State - Load saved position from localStorage
-    const [currentWordIndex, setCurrentWordIndex] = useState(() => {
-        const saved = localStorage.getItem(`talkplay-progress-${categoryId}`);
-        return saved ? parseInt(saved, 10) : 0;
-    });
+    const [currentWordIndex, setCurrentWordIndex] = useState(() => getCurrentIndex(categoryId));
     const [isPlaying, setIsPlaying] = useState(false);
+    const [isSpeaking, setIsSpeaking] = useState(false);
     const [waveAnimation, setWaveAnimation] = useState({ type: null, direction: null });
     const [showCelebration, setShowCelebration] = useState(false);
     const [showCompletion, setShowCompletion] = useState(false);
+    const [progress, setProgress] = useState(() => getCategoryCompletion(categoryId, categoryFlashcards.length));
     const audioRef = useRef(null);
-    
-    const triggerWave = (type, direction) => {
-        setWaveAnimation({ type, direction });
-        setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
-    };
     
     // Get current flashcard
     const currentCard = categoryFlashcards[currentWordIndex];
     
-    // Calculate progress
-    const progress = {
-        current: currentWordIndex + 1,
-        total: categoryFlashcards.length,
-        percentage: Math.round(((currentWordIndex + 1) / categoryFlashcards.length) * 100)
-    };
-    
     // Navigation handlers
     const goToNext = () => {
+        saveProgress(categoryId, currentCard.id);
+        setProgress(getCategoryCompletion(categoryId, categoryFlashcards.length));
+        
         // If not on the last card, show celebration and move to next
         if (currentWordIndex < categoryFlashcards.length - 1) {
             setShowCelebration(true); // Show celebration modal
@@ -78,6 +70,8 @@ export default function FlashcardPage() {
         const handleKeyPress = (e) => {
             if (e.key === 'ArrowRight') {
                 if (currentWordIndex < categoryFlashcards.length - 1) {
+                    saveProgress(categoryId, categoryFlashcards[currentWordIndex].id);
+                    setProgress(getCategoryCompletion(categoryId, categoryFlashcards.length));
                     setShowCelebration(true); // Show celebration modal instead
                     setCurrentWordIndex(currentWordIndex + 1);
                 }
@@ -91,14 +85,15 @@ export default function FlashcardPage() {
         
         window.addEventListener('keydown', handleKeyPress);
         return () => window.removeEventListener('keydown', handleKeyPress);
-    }, [currentWordIndex, categoryFlashcards.length]);
+    }, [currentWordIndex, categoryFlashcards.length, categoryId, categoryFlashcards]);
 
     // Stop recording when clicking outside the record button
     useEffect(() => {
         const handleClickOutside = (e) => {
             if (isRecording && !e.target.closest('.control-button.record')) {
                 stopRecording();
-                triggerWave('record', 'inward');
+                setWaveAnimation({ type: 'record', direction: 'inward' });
+                setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
             }
         };
 
@@ -114,33 +109,44 @@ export default function FlashcardPage() {
         // Reset state when category changes
         useEffect(() => {
             startTransition(() => {
-                setCurrentWordIndex(0);
+                const progress = getCategoryCompletion(categoryId, categoryFlashcards.length);
+                const isCompleted = progress.completed === progress.total;
+                
+                setCurrentWordIndex(getCurrentIndex(categoryId));
                 setShowCelebration(false);
-                setShowCompletion(false);
+                setShowCompletion(isCompleted);
                 setIsPlaying(false);
+                setProgress(progress);
             });
-        }, [categoryId]);
+        }, [categoryId, categoryFlashcards.length]);
 
         // Save progress to localStorage whenever card changes
         useEffect(() => {
-            localStorage.setItem(`talkplay-progress-${categoryId}`, currentWordIndex.toString());
+            saveCurrentIndex(categoryId, currentWordIndex);
         }, [currentWordIndex, categoryId]);
     
 
     const handleListen = async () => {
-        triggerWave('listen', 'outward');
+        setIsSpeaking(true);
+        setWaveAnimation({ type: 'listen', direction: 'outward' });
+        setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
         
         if (!('speechSynthesis' in window)) {
             showToast('🔊 Uh oh! Your browser doesn\'t have a voice! 🤷 Try using Chrome, Firefox, or Safari!');
+            setIsSpeaking(false);
             return;
         }
-        speak(currentCard.word);
+        
+        const utterance = new SpeechSynthesisUtterance(currentCard.word);
+        utterance.onend = () => setIsSpeaking(false);
+        speechSynthesis.speak(utterance);
     };
     
     const handleRecord = async () => {
         if (isRecording) {
             stopRecording();
-            triggerWave('record', 'inward');
+            setWaveAnimation({ type: 'record', direction: 'inward' });
+            setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
         } else {
             await startRecording();
         }
@@ -151,14 +157,16 @@ export default function FlashcardPage() {
         if (isPlaying && audioRef.current) {
             audioRef.current.pause();
             setIsPlaying(false);
-            triggerWave('play', 'inward');
+            setWaveAnimation({ type: 'play', direction: 'inward' });
+            setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
             return;
         }
 
         // If currently recording, stop recording first
         if (isRecording) {
             stopRecording();
-            triggerWave('record', 'inward');
+            setWaveAnimation({ type: 'record', direction: 'inward' });
+            setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
 
             await new Promise(resolve => {
                 const checkAudio = () => {
@@ -183,7 +191,8 @@ export default function FlashcardPage() {
             
             audio.onended = () => {
                 setIsPlaying(false);
-                triggerWave('play', 'inward');
+                setWaveAnimation({ type: 'play', direction: 'inward' });
+                setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
             };
             
             audio.onerror = (e) => {
@@ -206,13 +215,21 @@ export default function FlashcardPage() {
         <div className="flashcard-page">
             <div className="flashcard-page-container">
             <Link to="/categories" className="back-button">
-                ← Back to Categories
+                <i className="fa-solid fa-arrow-left"></i> Back to Categories
             </Link>
             <p>No flashcards found for this category.</p>
             </div>
         </div>
         );
     }
+    
+    const handleRetry = () => {
+        setShowCompletion(false);
+        setCurrentWordIndex(0);
+        saveCurrentIndex(categoryId, 0);
+        clearCategoryProgress(categoryId);
+        setProgress(getCategoryCompletion(categoryId, categoryFlashcards.length));
+    };
     
     return (
         <div className="flashcard-page">
@@ -221,12 +238,12 @@ export default function FlashcardPage() {
             {/* Header with Back button and Progress */}
             <div className="flashcard-header">
             <Link to="/categories" className="back-button">
-                ← Back
+                <i className="fa-solid fa-arrow-left"></i> Back
             </Link>
             
             <div className="progress-bar-container">
                 <ProgressBar 
-                    current={progress.current}
+                    current={progress.completed}
                     total={progress.total}
                     percentage={progress.percentage}
                 />
@@ -235,68 +252,87 @@ export default function FlashcardPage() {
             
             {/* Main Flashcard */}
             <div className="flashcard-main">
-            <Flashcard 
-                word={currentCard.word}
-                image={currentCard.image}
-                isRecording={isRecording}
-                isPlaying={isPlaying}
-                waveAnimation={waveAnimation}
-            />
-            
-            {/* Audio Control Buttons */}
-            <div className="flashcard-controls">
-                <div className="control-button-wrapper">
-                <button 
-                    className={`control-button listen ${waveAnimation.type === 'listen' && waveAnimation.direction === 'outward' ? 'wave-outward' : ''}`}
-                    onClick={handleListen}
-                    aria-label="Listen to word pronunciation"
+            {showCompletion ? (
+                <div className="completion-screen">
+                    <h2>Congratulations for finishing!</h2>
+                    <button className="retry-button" onClick={handleRetry}>
+                        <i className="fa-solid fa-arrow-rotate-right"></i> Retry
+                    </button>
+                </div>
+            ) : (
+                <>
+                <div 
+                    className="flashcard-container"
                 >
-                    🔊
-                </button>
-                <div className="control-label">Listen</div>
+                    <div className="flashcard-wrapper static">
+                        <Flashcard 
+                            word={currentCard.word}
+                            image={currentCard.image}
+                            isRecording={isRecording}
+                            isPlaying={isPlaying}
+                            waveAnimation={waveAnimation}
+                        />
+                    </div>
                 </div>
                 
-                <div className="control-button-wrapper">
-                <button 
-                    className={`control-button record ${isRecording ? 'recording' : ''} ${waveAnimation.type === 'record' && waveAnimation.direction === 'inward' ? 'wave-inward' : ''}`}
-                    onClick={handleRecord}
-                    aria-label="Record your voice"
-                >
-                    {isRecording ? '⏹️' : '🎤'}
-                </button>
-                <div className="control-label">Record</div>
+                {/* Audio Control Buttons */}
+                <div className="flashcard-controls">
+                    <div className="control-button-wrapper">
+                    <button 
+                        className={`control-button listen ${isSpeaking ? 'speaking' : ''} ${waveAnimation.type === 'listen' && waveAnimation.direction === 'outward' ? 'wave-outward' : ''}`}
+                        onClick={handleListen}
+                        aria-label="Listen to word pronunciation"
+                    >
+                        🔊
+                    </button>
+                    <div className="control-label">Listen</div>
+                    </div>
+                    
+                    <div className="control-button-wrapper">
+                    <button 
+                        className={`control-button record ${isRecording ? 'recording' : ''} ${waveAnimation.type === 'record' && waveAnimation.direction === 'inward' ? 'wave-inward' : ''}`}
+                        onClick={handleRecord}
+                        aria-label="Record your voice"
+                    >
+                        {isRecording ? '⏹️' : '🎤'}
+                    </button>
+                    <div className="control-label">Record</div>
+                    </div>
+                    
+                    <div className="control-button-wrapper">
+                    <button 
+                        className={`control-button play ${isRecording ? 'disabled-hover' : ''} ${isPlaying ? 'playing' : ''} ${waveAnimation.type === 'play' && waveAnimation.direction === 'outward' ? 'wave-outward' : ''} ${waveAnimation.type === 'play' && waveAnimation.direction === 'inward' ? 'wave-inward' : ''}`}
+                        onClick={handlePlay}
+                        aria-label="Play your recording"
+                    >
+                        ▶️
+                    </button>
+                    <div className="control-label">Play</div>
+                    </div>
                 </div>
                 
-                <div className="control-button-wrapper">
-                <button 
-                    className={`control-button play ${isRecording ? 'disabled-hover' : ''} ${isPlaying ? 'playing' : ''} ${waveAnimation.type === 'play' && waveAnimation.direction === 'outward' ? 'wave-outward' : ''} ${waveAnimation.type === 'play' && waveAnimation.direction === 'inward' ? 'wave-inward' : ''}`}
-                    onClick={handlePlay}
-                    aria-label="Play your recording"
-                >
-                    ▶️
-                </button>
-                <div className="control-label">Play</div>
+                {/* Navigation Buttons */}
+                <div className="flashcard-navigation">
+                    <button 
+                    className="nav-button prev" 
+                    onClick={goToPrevious}
+                    disabled={currentWordIndex === 0}
+                    aria-label="Previous card"
+                    >
+                    <i className="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button 
+                    className={`nav-button next ${currentWordIndex === categoryFlashcards.length - 1 ? 'finish' : ''}`}
+                    onClick={goToNext}
+                    disabled={false}
+                    aria-label="Next card"
+                    >
+                    {currentWordIndex === categoryFlashcards.length - 1 ? 'Finish! 🎉' : <i className="fa-solid fa-arrow-right"></i>}
+                    </button>
                 </div>
-            </div>
+                </>
+            )}
             
-            {/* Navigation Buttons */}
-            <div className="flashcard-navigation">
-                <button 
-                className="nav-button" 
-                onClick={goToPrevious}
-                disabled={currentWordIndex === 0}
-                >
-                ← Previous
-                </button>
-                <button 
-                className="nav-button" 
-                onClick={goToNext}
-                >
-                {currentWordIndex === categoryFlashcards.length - 1 ? 'Finish! 🎉' : 'Next →'}
-                </button>
-            </div>
-    
-
             {/* Toast Notification */}
             {toast && (
                 <div className={`toast toast-${toast.type}`}>
@@ -331,7 +367,9 @@ export default function FlashcardPage() {
                 setShowCompletion(false);
                 setCurrentWordIndex(0);
                 // Clear saved progress when restarting
-                localStorage.setItem(`talkplay-progress-${categoryId}`, '0');
+                saveCurrentIndex(categoryId, 0);
+                clearCategoryProgress(categoryId);
+                setProgress(getCategoryCompletion(categoryId, categoryFlashcards.length));
             }}
         />
             </div>

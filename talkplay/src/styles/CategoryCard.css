@@ -40,6 +40,21 @@
         opacity: 1;
     }
 
+    /* Progress badge */
+    .progress-badge {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1;
+    }
+
     /* Category-specific gradients */
     .category-card.animals {
         background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 100%);
@@ -102,7 +117,7 @@
     }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     .category-card {
         padding: 24px 16px;
         min-height: 240px;

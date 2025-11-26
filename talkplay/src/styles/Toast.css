@@ -1,0 +1,130 @@
+/* ============================================
+    TOAST NOTIFICATION STYLES
+   ============================================ */
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 24px 32px;
+    border-radius: 12px;
+    font-family: 'Fredoka', 'Helvetica', 'Arial', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    animation: slideInToast 0.3s ease-out;
+    max-width: 500px;
+    word-wrap: break-word;
+    z-index: 1000;
+    line-height: 1.6;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+}
+
+.toast-close:hover {
+    opacity: 1;
+}
+
+.toast-error {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF006E 100%);
+    color: white;
+    border-left: 4px solid #FF006E;
+    animation: slideInToast 0.3s ease-out, slideOutToast 0.3s ease-out 3.7s forwards;
+}
+
+.toast-error.toast:not(:has(.toast-close)) {
+    animation: slideInToast 0.3s ease-out, slideOutToast 0.3s ease-out 3.7s forwards;
+}
+
+.toast:has(.toast-close) {
+    animation: slideInToast 0.3s ease-out;
+}
+
+.toast-success {
+    background: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
+    color: white;
+    border-left: 4px solid #44A08D;
+    animation: slideInToast 0.3s ease-out, slideOutToast 0.3s ease-out 3.7s forwards;
+}
+
+.toast-success.toast:not(:has(.toast-close)) {
+    animation: slideInToast 0.3s ease-out, slideOutToast 0.3s ease-out 3.7s forwards;
+}
+
+.toast-encouragement {
+    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 50%, #FF006E 100%);
+    color: white;
+    border-left: 4px solid #FF006E;
+    top: 80px;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    transform: translateX(-50%);
+    animation: slideInEncouragement 0.3s ease-out, slideOutEncouragement 0.5s ease-out 3.7s forwards;
+}
+
+/* ============================================
+    TOAST ANIMATIONS
+   ============================================ */
+
+@keyframes slideInToast {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutToast {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+}
+
+@keyframes slideInEncouragement {
+    from {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutEncouragement {
+    from {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(-50%) translateY(-100%);
+        opacity: 0;
+    }
+}

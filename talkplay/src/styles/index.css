@@ -3,16 +3,13 @@
     Minimal reset and base configuration
    ============================================ */
 
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
+
   html, body, #root {
     margin: 0 !important;
     padding: 0 !important;
   }
-
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
-
-/* Import global design system */
-@import './styles/global.css';
 
   /* Minimal reset */
   * {
@@ -29,24 +26,13 @@
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-    font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
+    font-family: 'Fredoka', 'Helvetica', 'Arial', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Ensure all elements use Fredoka font */
   * {
       font-family: 'Fredoka', 'Comic Sans MS', sans-serif;
-  }
-
-  /* Standardize button fonts */
-  button, .btn, .start-button, .back-button, .nav-button, .control-button {
-      font-family: 'Fredoka', 'Comic Sans MS', sans-serif !important;
-  }
-
-  /* Standardize heading fonts */
-  h1, h2, h3, h4, h5, h6 {
-      font-family: 'Fredoka', 'Comic Sans MS', sans-serif !important;
   }
 
   #root {
