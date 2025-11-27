@@ -142,14 +142,14 @@ export function useAudioRecorder() {
             setHasPermission(false);
             if (error.name === 'NotAllowedError') {
                 showToast(
-                    "🎤 Uh-oh! I can't hear you! 🙉\n\nPlease call a grown-up to help!\n\n(Parents: Please enable microphone access in browser settings)", 
+                    `🙉 Can't hear you!\n(Unblock mic)`, 
                     'error', 
                     true
                 );
             } else if (error.name === 'NotFoundError') {
-                showToast('🎤 Hmm, we can\'t find your microphone! 🔍 Make sure your computer has one plugged in!', 'error', true);
+                showToast('🎤 No microphone found!\n(Plug in a mic)', 'error', true);
             } else {
-                showToast('🎤 Oh no! We\'re having trouble with your microphone! 😅 Try unplugging and plugging it back in!', 'error', true);
+                showToast('💥 Oops! Something broke!\n(Please refresh page)', 'error', true);
             }
             return false;
         }
@@ -185,7 +185,7 @@ export function useAudioRecorder() {
                     console.error('Error trimming silence:', error);
                     const url = URL.createObjectURL(blob);
                     setAudioUrl(url);
-                    showToast('⚙️ Hmm, something technical got mixed up! 🧩 Ask a parent or teacher to help check the app!', 'error', true);
+                    showToast('⚙️ Tech glitch! (Ask help)', 'error', true);
                 }
                 setIsRecording(false);
             };
