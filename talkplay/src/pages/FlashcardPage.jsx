@@ -12,6 +12,7 @@ import ProgressBar from '../components/ProgressBar';
 import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
 import { useAudioRecorder } from '../utils/useAudioRecorder';
+import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
 import { saveProgress, getCategoryCompletion, clearCategoryProgress, getCurrentIndex, saveCurrentIndex } from '../utils/storage';
 import '../styles/Flashcard.css';
 import '../styles/FlashcardAnimations.css';
@@ -21,6 +22,7 @@ import '../styles/FlashcardMobile.css';
 export default function FlashcardPage() {
     const { categoryId } = useParams();
     const { isRecording, startRecording, stopRecording, audioUrl, toast, clearToast, showToast } = useAudioRecorder();
+    const { speak, isSpeaking } = useSpeechSynthesis();
     
     // Get category info
     const category = categories.find(cat => cat.id === categoryId);
@@ -33,7 +35,6 @@ export default function FlashcardPage() {
     // State - Load saved position from localStorage
     const [currentWordIndex, setCurrentWordIndex] = useState(() => getCurrentIndex(categoryId));
     const [isPlaying, setIsPlaying] = useState(false);
-    const [isSpeaking, setIsSpeaking] = useState(false);
     const [waveAnimation, setWaveAnimation] = useState({ type: null, direction: null });
     const [showCelebration, setShowCelebration] = useState(false);
     const [showCompletion, setShowCompletion] = useState(false);
@@ -127,19 +128,15 @@ export default function FlashcardPage() {
     
 
     const handleListen = async () => {
-        setIsSpeaking(true);
         setWaveAnimation({ type: 'listen', direction: 'outward' });
         setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
         
         if (!('speechSynthesis' in window)) {
             showToast('🔊 Uh oh! Your browser doesn\'t have a voice! 🤷 Try using Chrome, Firefox, or Safari!');
-            setIsSpeaking(false);
             return;
         }
         
-        const utterance = new SpeechSynthesisUtterance(currentCard.word);
-        utterance.onend = () => setIsSpeaking(false);
-        speechSynthesis.speak(utterance);
+        speak(currentCard.word);
     };
     
     const handleRecord = async () => {
