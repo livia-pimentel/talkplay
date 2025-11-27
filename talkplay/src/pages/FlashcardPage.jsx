@@ -132,7 +132,7 @@ export default function FlashcardPage() {
         setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
         
         if (!('speechSynthesis' in window)) {
-            showToast(`🤐 Can't talk! (Change browser)`);
+            showToast(`🤐 Can't talk! (Change browser)`, 'error', true);
             return;
         }
         
@@ -178,7 +178,7 @@ export default function FlashcardPage() {
         }
 
         if (!audioUrl) {
-            showToast('🎤 Record first! ▶️ Then play');
+            showToast('🎤 Record first! ▶️ Then play', 'error', true);
             return;
         }
         try {
@@ -195,14 +195,14 @@ export default function FlashcardPage() {
             audio.onerror = (e) => {
                 console.error('Audio playback error:', e);
                 setIsPlaying(false);
-                showToast('🔇 Sound broken! ▶️ Try again');
+                showToast('🔇 Sound broken! ▶️ Try again', 'error', true);
             };
             
             await audio.play();
         } catch (error) {
             console.error('Playback error:', error);
             setIsPlaying(false);
-            showToast('💥 Oops! It broke! (Retry)');
+            showToast('💥 Oops! It broke! (Retry)', 'error', true);
         }
     };
     
