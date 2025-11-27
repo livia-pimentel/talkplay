@@ -318,15 +318,26 @@ export default function FlashcardPage() {
                     >
                     <i className="fa-solid fa-arrow-left"></i>
                     </button>
+                    {currentWordIndex < categoryFlashcards.length - 1 && (
+                        <button
+                            className="nav-button next"
+                            onClick={goToNext}
+                            aria-label='Next card'
+                        >
+                            <i className='fa-solid fa-arrow-right'></i>
+                        </button>
+                    )}
+                </div>
+                {currentWordIndex === categoryFlashcards.length - 1 && (
+                <div className="finish-button-container">
                     <button 
-                    className={`nav-button next ${currentWordIndex === categoryFlashcards.length - 1 ? 'finish' : ''}`}
-                    onClick={goToNext}
-                    disabled={false}
-                    aria-label="Next card"
+                        className="finish-main-button" 
+                        onClick={goToNext} 
                     >
-                    {currentWordIndex === categoryFlashcards.length - 1 ? 'Finish! 🎉' : <i className="fa-solid fa-arrow-right"></i>}
+                        Finish! 🎉
                     </button>
                 </div>
+                )}
                 </>
             )}
             
