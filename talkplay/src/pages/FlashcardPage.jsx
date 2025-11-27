@@ -132,7 +132,7 @@ export default function FlashcardPage() {
         setTimeout(() => setWaveAnimation({ type: null, direction: null }), 400);
         
         if (!('speechSynthesis' in window)) {
-            showToast('🔊 Uh oh! Your browser doesn\'t have a voice! 🤷 Try using Chrome, Firefox, or Safari!');
+            showToast(`🤐 Can't talk! (Change browser)`);
             return;
         }
         
@@ -195,14 +195,14 @@ export default function FlashcardPage() {
             audio.onerror = (e) => {
                 console.error('Audio playback error:', e);
                 setIsPlaying(false);
-                showToast('▶️ Oops! The sound got tangled up! 🎪 Ask a grown-up to help if it keeps happening!');
+                showToast('🔇 Sound broken! ▶️ Try again');
             };
             
             await audio.play();
         } catch (error) {
             console.error('Playback error:', error);
             setIsPlaying(false);
-            showToast('▶️ Uh oh! Something went wonky! 🎨 Ask a parent or teacher to help troubleshoot!');
+            showToast('💥 Oops! It broke! (Retry)');
         }
     };
     
