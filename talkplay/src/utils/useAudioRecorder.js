@@ -185,7 +185,7 @@ export function useAudioRecorder() {
                     console.error('Error trimming silence:', error);
                     const url = URL.createObjectURL(blob);
                     setAudioUrl(url);
-                    showToast('⚙️ Hmm, something technical got mixed up! 🧩 Ask a parent or teacher to help check the app!', 'error', true);
+                    showToast('⚙️ Tech glitch! (Ask help)', 'error', true);
                 }
                 setIsRecording(false);
             };
