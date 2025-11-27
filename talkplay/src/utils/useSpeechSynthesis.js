@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from 'react';
  */
 export function useSpeechSynthesis() {
     const [voices, setVoices] = useState([]);
+    const [isSpeaking, setIsSpeaking] = useState(false);
 
     useEffect(() => {
         const loadVoices = () => {
@@ -137,11 +138,15 @@ export function useSpeechSynthesis() {
                 utterance.voice = preferredVoice;
             }
 
+            setIsSpeaking(true);
+            utterance.onend = () => setIsSpeaking(false);
+            utterance.onerror = () => setIsSpeaking(false);
+
             window.speechSynthesis.speak(utterance);
         } else {
             console.warn('Speech synthesis not supported in this browser');
         }
     }, [voices]);
 
-    return { speak };
+    return { speak, isSpeaking };
 }
