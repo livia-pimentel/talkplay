@@ -178,7 +178,7 @@ export default function FlashcardPage() {
         }
 
         if (!audioUrl) {
-            showToast('🎤 Record first! (Then play)');
+            showToast('🎤 Record first! ▶️ Then play');
             return;
         }
         try {
