@@ -24,7 +24,8 @@
     margin-bottom: 16px;
     flex-wrap: wrap;
     gap: 16px;
-    padding: 16px 24px;
+    /* padding: 16px 24px; */
+    padding: 50px 24px;
 }
 
 .back-button {
@@ -107,7 +108,12 @@
 
 .flashcard-container {
     position: relative;
-    height: 600px;
+    /* height: 600px; */
+    height: auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .flashcard-wrapper {
@@ -131,7 +137,8 @@
 .control-button {
     width: 100px;
     height: 100px;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    border-radius: 24px;
     border: 5px solid white;
     display: flex;
     align-items: center;
@@ -141,6 +148,11 @@
     transition: all 0.3s ease;
     cursor: pointer;
     background: none;
+}
+
+.control-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
 .control-label {
@@ -162,9 +174,13 @@
 
 .nav-button {
     position: absolute;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+    /* width: 60px; */
+    padding: 0 60px;
+    min-width: 80px;
+    /* height: 60px; */
+    height: 70px;
+    /* border-radius: 50%; */
+    border-radius: 16px;
     border: none;
     background: linear-gradient(135deg, #06D6A0, #3A86FF);
     color: white;
@@ -210,7 +226,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.nav-button.finish {
+/* .nav-button.finish {
     width: auto;
     height: auto;
     padding: 12px 24px;
@@ -218,6 +234,35 @@
     font-size: 18px;
     font-weight: 700;
     min-width: 120px;
+} */
+
+.finish-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.finish-main-button {
+    background: linear-gradient(135deg, #06D6A0, #3A86FF);
+    color: white;
+    border: none;
+    width: auto;
+    min-width: 300px;
+    padding: 0px 30px;
+    border-radius: 16px;
+    height: 60px;
+    font-size: 22px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(6, 214, 160, 0.4);
+    transition: all 0.3s ease;
+}
+
+.finish-main-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(6, 214, 160, 0.5);
 }
 
 @media (min-width: 900px) {

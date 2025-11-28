@@ -95,6 +95,16 @@
         justify-content: space-evenly;
         gap: 10px;
     }
+
+    .finish-button-container {
+        order: 4;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .finish-main-button {
+        width: 100%;
+    }
     
     .flashcard-navigation {
         position: static;
