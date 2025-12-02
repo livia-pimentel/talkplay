@@ -57,7 +57,7 @@ performance, accessibility, and zero maintenance costs.
 
 | Component | Technology | Reason for Choice |
 | :--- | :--- | :--- |
-| **Frontend Library** | **React 18** | Enables a component-based architecture, |
+| **Frontend Library** | **React 19** | Enables a component-based architecture, |
 | | | making UI elements (like Flashcards) reusable |
 | | | and state management predictable. |
 | **Build Tool** | **Vite** | Chosen over Create React App (CRA) for its |
