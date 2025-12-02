@@ -398,13 +398,40 @@
 
 /* from merge
 /* Reduce height on large screens to prevent scrolling */
+
 @media (min-width: 1024px) {
+
+    .flashcard-main {
+        height: auto;
+        min-height: 75vh;
+    }
+
+    .flashcard-header {
+        padding: 10px 25px;
+    }
+
+    .flashcard-container {
+        margin-bottom: 10px;
+    }
+
+    .flashcard {
+        padding: 0;
+    }
+
     .flashcard-image-container {
-        height: 280px;
+        height: 250px;
         margin-bottom: 24px;
     }
     
     .flashcard {
         padding: 40px;
+    }
+
+    .nav-button.prev {
+        left: 40px;
+    }
+
+    .nav-button.next {
+        right: 40px;
     }
 }

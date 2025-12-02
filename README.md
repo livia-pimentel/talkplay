@@ -1,5 +1,11 @@
 # TalkPlay 🗣️
 
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+
+> **🎮 Play Now (Live Demo):** [https://talkplay.vercel.app](https://talkplay.vercel.app)
+
 TalkPlay is a free, interactive web application designed to help children
 aged 3-5 with speech development delays. It makes daily pronunciation
 practice engaging through interactive flashcards, allowing parents to
@@ -13,20 +19,40 @@ support and track their child's progress at home.
 - [Project Structure](#-project-structure)
 - [Usage](#-usage)
 - [Development](#-development)
+- [The Team](#-the-team)
 - [License](#-license)
 
 ## ✨ Features
 
-- **Interactive Flashcards**: Visual learning with colorful images across three categories
-- **Three Learning Categories**:
-  - 🦁 Animals (10 flashcards)
-  - 🍎 Foods (10 flashcards)
-  - 🧸 Toys (10 flashcards)
-- **Child-Friendly Interface**: Colorful, animated UI designed for young children
-- **Easy Navigation**: Simple routing between welcome, category selection,
-  and flashcard pages
-- **Responsive Design**: Works across different devices and screen sizes
-- **Progress Tracking**: Local storage for tracking learning progress (in development)
+### 🎮 Core Gameplay
+
+- **🗣️ Text-to-Speech**: Uses the browser's native **Web Speech API**
+to pronounce words clearly in a female English voice.
+- **🎤 Voice Recording**: Allows children to record their
+own pronunciation using the **MediaRecorder API**.
+- **▶️ Instant Playback**: Children can listen to their own recordings
+immediately to compare with the correct pronunciation.
+- **🦁 Three Learning Categories**:
+  - Animals, Foods, and Toys (30 curated flashcards with colorful illustrations).
+
+### 🏆 Gamification & Persistence
+
+- **💾 Auto-Save Progress**: Progress is automatically saved
+to the browser's **LocalStorage**, so children can
+close the tab and resume later without losing data.
+- **📊 Visual Progress Bars**: Real-time feedback showing
+how many words have been mastered in the current category.
+- **🎉 Celebration Screen**: Fun animations and
+encouraging messages appear when a category is completed.
+
+### ⚙️ UX & Technical
+
+- **📱 Child-Friendly Interface**: Large buttons, vibrant gradients,
+and intuitive navigation designed for small hands.
+- **🛡️ Browser Compatibility Check**: Automatically detects if the
+browser supports the necessary Audio APIs and alerts the user if
+a switch to Chrome/Edge is needed.
+- **🎨 Fully Responsive**: Optimized layouts for Mobile, Tablet, and Desktop.
 
 ## 🛠️ Tech Stack
 
@@ -34,6 +60,10 @@ support and track their child's progress at home.
 - **Build Tool**: Vite 7.2.2
 - **Styling**: CSS and Bootstrap with custom animations
 - **Code Quality**: ESLint 9.39.1
+- **Routing:** React Router DOM
+- **Audio APIs:** - `MediaRecorder API` (for recording)
+  - `Web Speech API` (for text-to-speech)
+- **Persistence:** LocalStorage API
 
 ## 🚀 Getting Started
 
@@ -124,9 +154,11 @@ talkplay/
 
 1. **Welcome Screen**: Start by clicking "Start Playing!" on the welcome screen
 2. **Choose a Category**: Select from Animals, Foods, or Toys
-3. **Practice Words**: View flashcards with images and practice pronunciation
-4. **Track Progress**: The app will remember which words have been practiced
-   (feature in development)
+3. **Listen:** Tap the **Speaker 🔊** button to hear the word.
+4. **Record:** Tap the **Microphone 🎤** button.
+   - *Note: You must click "Allow" on the browser permission popup.*
+5. **Play:** Tap **Play ▶️** to hear your own voice!
+6. **Finish:** Complete all 10 words to see the celebration screen!
 
 ### Navigation Flow
 
@@ -161,6 +193,14 @@ Flashcard Practice (/category/:categoryId)
 1. Add image to appropriate category folder in `src/assets/images/`
 2. Import image in `src/data/flashcards.js`
 3. Add new flashcard object to `allFlashcards` array
+
+## 👥 The Team
+
+This project was developed as a Capstone Project by:
+
+- **Andrea Toreki**
+- **Amon A. Vieira**
+- **Livia Pimentel**
 
 ## 📄 License
 
