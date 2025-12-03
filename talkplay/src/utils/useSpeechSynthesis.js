@@ -35,6 +35,7 @@ export function useSpeechSynthesis() {
             const isEdge = /Edg/.test(navigator.userAgent);
             const isChrome = /Chrome/.test(navigator.userAgent) && !/Edg/.test(navigator.userAgent);
             const isFirefox = /Firefox/.test(navigator.userAgent);
+            const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
 
             // Browser-specific settings
             if (isChrome) {
@@ -46,6 +47,9 @@ export function useSpeechSynthesis() {
             } else if (isFirefox) {
                 utterance.rate = 1.0;
                 utterance.pitch = 1.1;
+            } else if (isSafari) {
+                utterance.rate = 1.0;
+                utterance.pitch = 1.2;
             } else {
                 utterance.rate = 1.0;
                 utterance.pitch = 1.1;
@@ -117,6 +121,14 @@ export function useSpeechSynthesis() {
                         )
                     ) || availableVoices.find(voice => voice.lang.startsWith('en-'))
                     || availableVoices[0];
+                } else if (isSafari) {
+                    preferredVoice = availableVoices.find(voice => 
+                        voice.name.toLowerCase().includes('samantha')
+                    ) || availableVoices.find(voice => 
+                        voice.name.toLowerCase().includes('karen')
+                    ) || availableVoices.find(voice => 
+                        voice.lang.startsWith('en-') && !voice.name.toLowerCase().includes('siri')
+                    ) || availableVoices[0];
                 } else {
                     // Other browsers: Generic female voice selection
                     const femaleVoices = availableVoices.filter(voice => {
