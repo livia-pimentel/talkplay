@@ -1,101 +1,160 @@
 /* ============================================
-    WELCOME PAGE STYLES
+    WELCOME PAGE STYLES - ENHANCED
    ============================================ */
 
-    .welcome-container {
+.welcome-container {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, 
-        #FFBE0B 0%, 
-        #FB5607 25%, 
-        #FF006E 50%, 
-        #8338EC 75%, 
-        #3A86FF 100%
-    );
+    background: linear-gradient(-45deg, #FF006E, #8338EC, #3A86FF, #06FFA5, #FFBE0B, #FB5607);
+    background-size: 400% 400%;
+    animation: aurora 20s ease infinite;
     position: relative;
     overflow: hidden;
     margin: 0;
     padding: 0;
-    }
+}
 
-    .welcome-content {
+@keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.welcome-content {
     position: relative;
     z-index: 10;
     text-align: center;
     max-width: 600px;
+    padding: 20px;
     animation: fadeInUp 1s ease;
-    }
+}
 
-    /* Logo Section */
-    .welcome-logo-section {
-    margin-bottom: 64px;
+/* Logo Section */
+.welcome-logo-section {
+    margin-bottom: 48px;
     animation: bounceIn 1.2s ease;
-    }
+}
 
-    .welcome-logo {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 32px;
+.welcome-logo {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 24px;
     display: block;
-    animation: float 3s ease-in-out infinite;
+    animation: float 3s ease-in-out infinite, glow 2s ease-in-out infinite alternate;
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
-    }
+    transition: transform 0.3s ease;
+}
 
-    .welcome-title {
-    font-size: 80px;
+@keyframes glow {
+    0% { filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3)); }
+    100% { filter: drop-shadow(0 10px 40px rgba(255, 255, 255, 0.5)); }
+}
+
+.welcome-logo-section:hover .welcome-logo {
+    transform: translateY(-10px) scale(1.15) rotate(5deg);
+    animation-play-state: paused;
+}
+
+.welcome-title {
+    font-size: 88px;
     font-weight: 700;
     color: white;
-    text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4);
-    margin-bottom: 16px;
+    text-shadow: 
+        4px 4px 0px rgba(0, 0, 0, 0.2),
+        8px 8px 20px rgba(0, 0, 0, 0.4);
+    margin-bottom: 12px;
     letter-spacing: -2px;
-    }
+    transition: transform 0.3s ease, text-shadow 0.3s ease;
+}
 
-    .welcome-tagline {
-    font-size: 32px;
+.welcome-logo-section:hover .welcome-title {
+    transform: scale(1.05);
+    text-shadow: 
+        4px 4px 0px rgba(0, 0, 0, 0.2),
+        8px 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.welcome-tagline {
+    font-size: 28px;
     color: white;
     font-weight: 600;
     text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
     margin-bottom: 16px;
-    }
+    opacity: 0.95;
+}
 
-    /* Start Button - Gradient Background */
-    .start-button {
+/* Start Button */
+.start-button {
     display: inline-block;
-    background: linear-gradient(135deg, #06FFA5 0%, #06D6A0 50%, #3A86FF 100%);
-    padding: 28px 72px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 24px 64px;
     border-radius: 100px;
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
-    color: white;
+    color: #8338EC;
     text-decoration: none;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        0 0 0 2px rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
     animation: pulse 2s ease-in-out infinite;
     margin-bottom: 32px;
-    }
+    position: relative;
+    overflow: hidden;
+}
 
-    .start-button:hover {
-    transform: scale(1.1) translateY(-8px);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+.start-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.start-button:hover::before {
+    left: 100%;
+}
+
+.start-button:hover {
+    transform: scale(1.08) translateY(-6px);
+    background: linear-gradient(135deg, #8338EC, #FF006E);
+    color: white;
+    box-shadow: 
+        0 20px 50px rgba(131, 56, 236, 0.5),
+        0 0 0 4px rgba(255, 255, 255, 0.3);
     animation: none;
-    }
+}
 
-    .start-button:active {
+.start-button:active {
     transform: scale(1.05) translateY(-4px);
-    }
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 -2px 0 rgba(0, 0, 0, 0.1);
+}
 
-    .welcome-subtitle {
-    font-size: 24px;
+.welcome-subtitle {
+    font-size: 22px;
     color: white;
     text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
     font-weight: 500;
-    opacity: 0.95;
-    }
+    opacity: 0.9;
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
 
-    /* Background Bubbles */
-    .background-bubbles {
+/* Background Bubbles */
+.background-bubbles {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -103,58 +162,176 @@
     left: 0;
     overflow: hidden;
     pointer-events: none;
-    }
+}
 
-    .bubble {
+.bubble {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.15);
     animation: floatUp 20s ease-in infinite;
-    }
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
 
-    .bubble-1 {
+.bubble-1 {
     width: 120px;
     height: 120px;
     bottom: -120px;
     left: 10%;
     animation-delay: 0s;
-    }
+    animation-duration: 25s;
+}
 
-    .bubble-2 {
+.bubble-2 {
     width: 80px;
     height: 80px;
     bottom: -80px;
     left: 30%;
     animation-delay: 4s;
-    }
+    animation-duration: 20s;
+}
 
-    .bubble-3 {
+.bubble-3 {
     width: 150px;
     height: 150px;
     bottom: -150px;
     left: 50%;
     animation-delay: 2s;
-    }
+    animation-duration: 30s;
+}
 
-    .bubble-4 {
+.bubble-4 {
     width: 100px;
     height: 100px;
     bottom: -100px;
     left: 70%;
     animation-delay: 6s;
-    }
+    animation-duration: 22s;
+}
 
-    .bubble-5 {
+.bubble-5 {
     width: 90px;
     height: 90px;
     bottom: -90px;
     left: 85%;
     animation-delay: 8s;
+    animation-duration: 28s;
+}
+
+/* Floating Icons */
+.floating-icons {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.floating-icon {
+    position: absolute;
+    font-size: 48px;
+    animation: floatIcon 6s ease-in-out infinite;
+    opacity: 0.8;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.floating-icon:nth-child(1) {
+    top: 15%;
+    left: 8%;
+    animation-delay: 0s;
+}
+
+.floating-icon:nth-child(2) {
+    top: 25%;
+    right: 10%;
+    animation-delay: 1s;
+    font-size: 40px;
+}
+
+.floating-icon:nth-child(3) {
+    bottom: 20%;
+    left: 12%;
+    animation-delay: 2s;
+    font-size: 36px;
+}
+
+.floating-icon:nth-child(4) {
+    bottom: 30%;
+    right: 8%;
+    animation-delay: 3s;
+}
+
+.floating-icon:nth-child(5) {
+    top: 60%;
+    left: 5%;
+    animation-delay: 1.5s;
+    font-size: 32px;
+}
+
+.floating-icon:nth-child(6) {
+    top: 10%;
+    right: 25%;
+    animation-delay: 2.5s;
+    font-size: 44px;
+}
+
+@keyframes floatIcon {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
     }
+    25% {
+        transform: translateY(-15px) rotate(5deg);
+    }
+    75% {
+        transform: translateY(10px) rotate(-5deg);
+    }
+}
 
-    /* ===== ANIMATIONS ===== */
+/* Sparkles */
+.sparkles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 4;
+}
 
-    @keyframes fadeInUp {
+.sparkle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: white;
+    border-radius: 50%;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+.sparkle:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+.sparkle:nth-child(2) { top: 30%; right: 15%; animation-delay: 0.3s; }
+.sparkle:nth-child(3) { bottom: 25%; left: 25%; animation-delay: 0.6s; }
+.sparkle:nth-child(4) { bottom: 35%; right: 20%; animation-delay: 0.9s; }
+.sparkle:nth-child(5) { top: 50%; left: 10%; animation-delay: 1.2s; }
+.sparkle:nth-child(6) { top: 15%; right: 30%; animation-delay: 1.5s; }
+.sparkle:nth-child(7) { bottom: 15%; left: 35%; animation-delay: 0.4s; }
+.sparkle:nth-child(8) { top: 40%; right: 8%; animation-delay: 0.8s; }
+
+@keyframes sparkle {
+    0%, 100% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(40px);
@@ -163,9 +340,9 @@
         opacity: 1;
         transform: translateY(0);
     }
-    }
+}
 
-    @keyframes bounceIn {
+@keyframes bounceIn {
     0% {
         opacity: 0;
         transform: scale(0.3);
@@ -180,52 +357,56 @@
     100% {
         transform: scale(1);
     }
-    }
+}
 
-    @keyframes float {
+@keyframes float {
     0%, 100% {
         transform: translateY(0px);
     }
     50% {
         transform: translateY(-20px);
     }
-    }
+}
 
-    @keyframes pulse {
+@keyframes pulse {
     0%, 100% {
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        box-shadow: 
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 -4px 0 rgba(0, 0, 0, 0.1);
     }
     50% {
-        box-shadow: 0 16px 50px rgba(6, 255, 165, 0.6);
+        box-shadow: 
+            0 12px 40px rgba(255, 255, 255, 0.4),
+            inset 0 -4px 0 rgba(0, 0, 0, 0.1);
     }
-    }
+}
 
-    @keyframes floatUp {
+@keyframes floatUp {
     0% {
         opacity: 0;
         transform: translateY(0);
     }
     10% {
-        opacity: 0.4;
+        opacity: 0.5;
     }
     90% {
-        opacity: 0.4;
+        opacity: 0.5;
     }
     100% {
         opacity: 0;
         transform: translateY(-120vh);
     }
-    }
+}
 
-    /* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE ===== */
 
-    @media (max-width: 768px) {
+@media (max-width: 768px) {
     .welcome-title {
         font-size: 56px;
     }
 
     .welcome-tagline {
-        font-size: 24px;
+        font-size: 22px;
     }
 
     .welcome-logo {
@@ -234,23 +415,33 @@
     }
 
     .start-button {
-        padding: 24px 56px;
-        font-size: 28px;
+        padding: 20px 48px;
+        font-size: 26px;
     }
 
     .welcome-subtitle {
         font-size: 18px;
         padding: 0 20px;
     }
+    
+    .floating-icon {
+        font-size: 32px;
     }
+    
+    .floating-icon:nth-child(2),
+    .floating-icon:nth-child(4),
+    .floating-icon:nth-child(6) {
+        display: none;
+    }
+}
 
-    @media (max-width: 480px) {
+@media (max-width: 480px) {
     .welcome-title {
-        font-size: 48px;
+        font-size: 44px;
     }
 
     .welcome-tagline {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .welcome-logo {
@@ -259,11 +450,15 @@
     }
 
     .start-button {
-        padding: 20px 48px;
-        font-size: 24px;
+        padding: 18px 40px;
+        font-size: 22px;
     }
 
     .welcome-subtitle {
         font-size: 16px;
+    }
+    
+    .floating-icons {
+        display: none;
     }
 }

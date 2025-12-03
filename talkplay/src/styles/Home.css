@@ -3,34 +3,61 @@
    ============================================ */
 
 .home-container {
-    /* max-width: 1400px; */
     width: 100%;
     margin: 0 auto;
     padding: 40px 24px;
     min-height: 100vh;
-    background:  linear-gradient(135deg, #FFF8F0 0%, #FFFBF5 100%);
+    background: linear-gradient(-45deg, #FF006E, #8338EC, #3A86FF, #06FFA5);
+    background-size: 400% 400%;
+    animation: aurora 15s ease infinite;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 /* Header section */
 .home-header {
     text-align: center;
     margin-bottom: 48px;
-    }
+}
+
+.home-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 16px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.home-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
 .home-title {
     font-size: 64px;
-    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 50%, #FF006E 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 16px;
+    color: white;
+    text-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+    margin-bottom: 12px;
     font-weight: 700;
 }
 
 .home-subtitle {
     font-size: 28px;
-    color: var(--text-medium);
+    color: rgba(255, 255, 255, 0.95);
     font-weight: 500;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Category grid */
@@ -46,12 +73,17 @@
 /* Responsive breakpoints */
 
 /* Tablet: Keep 3 columns like desktop */
-    @media (min-width: 768px) and (max-width: 991px) {
-        .category-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;  /* Slightly smaller gap for tablet */
-            max-width: 900px;  /* Constrain width so cards don't get too big */
-        }
+@media (min-width: 768px) and (max-width: 991px) {
+    .category-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        max-width: 900px;
+    }
+    
+    .home-logo {
+        width: 80px;
+        height: 80px;
+    }
     
     .home-title {
         font-size: 48px;
@@ -62,14 +94,19 @@
     }
 }
 
-    /* Mobile: 1 column */
-    @media (max-width: 767px) {
+/* Mobile: 1 column */
+@media (max-width: 767px) {
     .home-container {
         padding: 24px 16px;
     }
     
     .home-header {
         margin-bottom: 32px;
+    }
+    
+    .home-logo {
+        width: 70px;
+        height: 70px;
     }
     
     .home-title {
@@ -82,12 +119,18 @@
     
     .category-grid {
         grid-template-columns: 1fr;
-        gap: 16px;  /* Change this if needed for mobile card spacing */
+        gap: 16px;
         padding: 0;
     }
-    }
+}
+
 /* Extra small mobile */
 @media (max-width: 375px) {
+    .home-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
     .home-title {
         font-size: 32px;
     }

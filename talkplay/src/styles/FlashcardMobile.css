@@ -1,5 +1,5 @@
 /* ============================================
-    MOBILE CSS
+    FIXED THE ENTIRE MOBILE CSS
    ============================================ */
 
 @media (max-width: 900px) {
@@ -45,9 +45,8 @@
     .control-label {
         font-size: 16px;
     }
-}
 
-@media (max-width: 900px) {
+    /* Toast */
     .toast {
         bottom: 20px;
         right: 20px;
@@ -56,6 +55,7 @@
         font-size: 18px;
         padding: 20px 24px;
     }
+    
     .toast-encouragement {
         top: 20px;
         left: 50%;
@@ -67,48 +67,22 @@
         max-height: 25px;
     }
 
+    /* Flashcard layout */
     .flashcard-main {
         display: flex;
         flex-direction: column;
     }
+    
     .flashcard-container {
         order: 1;
-        height: 400px;
+        height: 290px;
         flex-shrink: 0;
     }
-    .control-button-wrapper {
-        flex: 1;
-        text-align: center;
-    }
-    .control-button {
-        height: 100px;
-        border-radius: 12px;
-        font-size: 40px;
-        width: 100%;
-    }
-    .flashcard-controls {
-        position: static;
-        bottom: auto;
-        left: auto;
-        transform: none;
-        order: 3;
-        justify-content: space-evenly;
-        gap: 10px;
-    }
-
-    .finish-button-container {
-        order: 4;
-        margin-top: 20px;
-        width: 100%;
-    }
-
-    .finish-main-button {
-        width: 100%;
-    }
     
+    /* Navigation buttons */
     .flashcard-navigation {
         position: static;
-        margin-top: 25px;
+        margin-top: 55px;
         bottom: auto;
         left: auto;
         transform: none;
@@ -120,14 +94,55 @@
     
     .nav-button {
         height: 50px;
-        border-radius: 12px;
+        border-radius: 16px;
         position: static;
         font-size: 20px;
         flex: 1;
     }
+    
     .nav-button.prev,
     .nav-button.next {
         left: auto;
         right: auto;
+    }
+    
+    /* Finish button style (replaces next on last card) */
+    .nav-button.next.finish {
+            background: linear-gradient(135deg, #06FFA5 0%, #00D4AA 100%);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(6, 255, 165, 0.4);
+            font-weight: 600;
+            white-space: nowrap;
+            font-size: 18px;
+            padding: 0 24px;
+        }
+    
+    .nav-button.next.finish:active {
+        transform: scale(0.98);
+        box-shadow: 0 4px 12px rgba(6, 255, 165, 0.3);
+    }
+
+    /* Control buttons */
+    .flashcard-controls {
+        position: static;
+        bottom: auto;
+        left: auto;
+        transform: none;
+        order: 3;
+        justify-content: space-evenly;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+    
+    .control-button-wrapper {
+        flex: 1;
+        text-align: center;
+    }
+    
+    .control-button {
+        height: 70px;
+        border-radius: 22px;
+        font-size: 36px;
+        width: 100%;
     }
 }

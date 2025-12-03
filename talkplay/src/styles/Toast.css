@@ -7,7 +7,7 @@
     bottom: 30px;
     right: 30px;
     padding: 24px 32px;
-    border-radius: 12px;
+    border-radius: 20px;
     font-family: 'Fredoka', 'Helvetica', 'Arial', sans-serif;
     font-size: 20px;
     font-weight: 600;
@@ -85,14 +85,18 @@
     TOAST ANIMATIONS
    ============================================ */
 
+   /* Improved slide in/out animations */
 @keyframes slideInToast {
-    from {
-        transform: translateX(400px);
-        opacity: 0;
+    0% { 
+        transform: translateX(400px) scale(0.8); 
+        opacity: 0; 
     }
-    to {
-        transform: translateX(0);
-        opacity: 1;
+    60% { 
+        transform: translateX(-15px) scale(1.02); 
+    }
+    100% { 
+        transform: translateX(0) scale(1); 
+        opacity: 1; 
     }
 }
 

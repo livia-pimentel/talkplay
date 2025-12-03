@@ -4,9 +4,16 @@
 
 .flashcard-page {
     min-height: 100vh;
-    background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF5 100%);
+    background: linear-gradient(-45deg, #FF006E, #8338EC, #3A86FF, #06FFA5); /* Added vibrant gradient background */
     overflow-x: hidden; 
     position: relative;
+    animation: aurora 15s ease infinite;
+}
+
+@keyframes aurora {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .flashcard-page-container {
@@ -131,7 +138,7 @@
     gap: 28px;
     justify-content: center;
     position: static;
-    margin-top: 15px;
+    margin-top: 40px; /* Added margin for spacing */
 }
 
 .control-button {
@@ -139,7 +146,7 @@
     height: 100px;
     /* border-radius: 50%; */
     border-radius: 24px;
-    border: 5px solid white;
+    /*border: 5px solid white; */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -237,32 +244,39 @@
 } */
 
 .finish-button-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 30px;
-    margin-bottom: 40px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
 }
 
 .finish-main-button {
+    position: absolute;
+    right: 20px;
+    padding: 0 30px;
+    min-width: 80px;
+    height: 70px;
+    border-radius: 16px;
+    border: none;
     background: linear-gradient(135deg, #06D6A0, #3A86FF);
     color: white;
-    border: none;
-    width: auto;
-    min-width: 300px;
-    padding: 0px 30px;
-    border-radius: 16px;
-    height: 60px;
-    font-size: 22px;
-    font-weight: 800;
+    font-size: 24px;
+    font-weight: 900;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(6, 214, 160, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(6, 214, 160, 0.3);
     transition: all 0.3s ease;
+    pointer-events: auto;
+    z-index: 15;
 }
 
 .finish-main-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(6, 214, 160, 0.5);
+    background: linear-gradient(135deg, #06D6A0, #3A86FF);
+    box-shadow: 0 6px 20px rgba(6, 214, 160, 0.5);
 }
 
 @media (min-width: 900px) {
@@ -277,7 +291,7 @@
    ============================================ */
 
 .flashcard {
-    background: white;
+    background: linear-gradient(135deg, #FFBE0B 0%, #FB5607 100%);
     border-radius: 32px;
     padding: 48px;
     max-width: 500px;
@@ -287,9 +301,17 @@
     transition: all 0.3s ease;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     cursor: pointer;
+    animation: gentleFloat 4s ease-in-out infinite;
+}
+
+/* Added gentle floating animation */
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
 }
 
 .flashcard:hover {
+    animation: none;
     transform: scale(1.02) translateY(-4px);
     box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
 }
@@ -297,15 +319,24 @@
 .flashcard-image-container {
     width: 100%;
     height: 300px;
-    background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+    background: linear-gradient(
+            135deg,
+            rgba(255, 190, 11, 0.15) 0%,
+            rgba(251, 86, 7, 0.1) 100%
+        );
     border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 32px;
-    box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.1);
-    border: 4px solid white;
+    box-shadow: inset 0 4px 12px rgba(131, 56, 236, 0.1);
+    border: 4px solid rgba(255, 255, 255, 0.7);
     overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.flashcard:hover .flashcard-image-container {
+    transform: scale(1.02);
 }
 
 .flashcard-image {
@@ -325,10 +356,31 @@
     background-clip: text;
     text-align: center;
     margin: 0;
-    color: transparent;
+    color: white;
 }
 
 /* Hover */
+/* Added rainbow border effect */
+.flashcard::before {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    background: linear-gradient(135deg, 
+        var(--yellow), var(--orange), var(--pink), var(--purple), var(--blue)
+    );
+    border-radius: 36px;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.flashcard:hover::before {
+    opacity: 1;
+}
+
 .flashcard:hover {
     background: linear-gradient(135deg, 
         #FFBE0B, #FB5607, #FF006E, #8338EC, #3A86FF
@@ -407,7 +459,7 @@
     }
 
     .flashcard-header {
-        padding: 10px 25px;
+        padding: 4% 25px; /* Reduce padding for larger screens */
     }
 
     .flashcard-container {
@@ -433,5 +485,39 @@
 
     .nav-button.next {
         right: 40px;
+    }
+}
+
+/* Large desktop screens - Fix scrolling on 15" laptops and larger */
+@media (min-width: 1600px) and (min-height: 900px) {
+    .flashcard-container {
+        height: 500px;
+        margin-bottom: 10px;
+    }
+    
+    .flashcard-image-container {
+        height: 240px;
+        margin-bottom: 24px;
+    }
+    
+    .flashcard {
+        padding: 32px;
+    }
+}
+
+/* Desktop: Position finish button on the right like next arrow */
+@media (min-width: 1024px) {
+    .flashcard-navigation {
+        top: 25%;
+        transform: translateY(-50%);
+    }
+    
+    .finish-button-container {
+        top: 25%;
+        transform: translateY(-50%);
+    }
+    
+    .finish-main-button {
+        right: 20px;
     }
 }

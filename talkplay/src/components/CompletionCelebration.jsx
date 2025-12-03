@@ -45,17 +45,20 @@ export default function CompletionCelebration({
                             <p className="next-categories-label">Try another category:</p>
                             <div className="category-buttons">
                                 {otherCategories.map(cat => (
-                                    <button
-                                        key={cat.id}
-                                        onClick={() => navigate(`/category/${cat.id}`)}
-                                        className={`category-mini-card ${cat.id}`}
-                                    >
-                                        <div className="category-mini-icon">
-                                            <img src={cat.icon} alt={cat.name} />
-                                        </div>
-                                        <div className="category-mini-name">{cat.name}</div>
-                                    </button>
-                                ))}
+                                <button
+                                    key={cat.id}
+                                    onClick={() => {
+                                        onClose();
+                                        navigate(`/category/${cat.id}`);
+                                    }}
+                                    className={`category-mini-card ${cat.id}`}
+                                >
+                                    <div className="category-mini-icon">
+                                        <img src={cat.icon} alt={cat.name} />
+                                    </div>
+                                    <div className="category-mini-name">{cat.name}</div>
+                                </button>
+                            ))}
                             </div>
                         </div>
                     )}

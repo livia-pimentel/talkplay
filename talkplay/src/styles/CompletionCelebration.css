@@ -18,10 +18,10 @@
 
 .completion-modal {
     background: linear-gradient(135deg, #8338EC 0%, #FF006E 50%, #FFBE0B 100%);
-    padding: 60px 40px;
+    padding: 30px 20px;
     border-radius: 32px;
     box-shadow: 0 20px 80px rgba(0, 0, 0, 0.4);
-    max-width: 600px;
+    max-width: 500px;
     width: 90%;
     text-align: center;
     animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -29,7 +29,7 @@
 }
 
 .completion-icon {
-    font-size: 120px;
+    font-size: 100px;
     margin-bottom: 20px;
     animation: rotate 2s ease-in-out infinite;
 }
@@ -44,7 +44,7 @@
 }
 
 .completion-title {
-    font-size: 48px;
+    font-size: 40px;
     font-weight: 700;
     color: white;
     margin-bottom: 24px;
@@ -66,11 +66,24 @@
     margin-bottom: 40px;
 }
 
+/* Added individual stat badge */
 .stat-badge {
     background: rgba(255, 255, 255, 0.95);
     padding: 24px 32px;
     border-radius: 20px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.3s both;
+}
+
+@keyframes popIn {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .stat-emoji {
@@ -98,6 +111,7 @@
     flex-wrap: wrap;
 }
 
+/* Added staggered animation for buttons */
 .completion-button {
     padding: 18px 32px;
     font-size: 20px;
@@ -110,6 +124,15 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     text-decoration: none;
     display: inline-block;
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+
+.completion-button.secondary {
+    animation-delay: 0.5s;
+}
+
+.completion-button.tertiary {
+    animation-delay: 0.6s;
 }
 
 .completion-button.primary {
@@ -132,6 +155,7 @@
     box-shadow: 0 8px 24px rgba(131, 56, 236, 0.4);
 }
 
+/* Added an animation for category mini cards */
 .category-mini-card {
     background: white;
     border-radius: 20px;
@@ -144,7 +168,12 @@
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     font-family: 'Fredoka', sans-serif;
+    animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
 }
+
+.category-mini-card:nth-child(1) { animation-delay: 0.4s; }
+.category-mini-card:nth-child(2) { animation-delay: 0.5s; }
+.category-mini-card:nth-child(3) { animation-delay: 0.6s; }
 
 .category-mini-card:hover {
     transform: translateY(-4px) scale(1.05);
@@ -266,3 +295,4 @@
         padding: 12px 20px;
     }
 }
+

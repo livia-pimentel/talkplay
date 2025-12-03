@@ -5,6 +5,7 @@ import './styles/index.css';
 import Welcome from './pages/Welcome.jsx';
 import Home from './pages/Home.jsx';
 import FlashcardPage from "./pages/FlashcardPage.jsx";
+import UnsupportedBrowser from './components/UnsupportedBrowser.jsx'
 
 // Creation of routes
 const router = createBrowserRouter([
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/category/:categoryId',
     element: <FlashcardPage />,
+  },
+  {
+    path: '/test-browser', // TEMPORARY TEST ROUTE - Remove after testing!
+    element: <UnsupportedBrowser />,
   }
 ]);
 
