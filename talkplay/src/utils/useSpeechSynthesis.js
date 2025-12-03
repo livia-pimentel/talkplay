@@ -121,6 +121,7 @@ export function useSpeechSynthesis() {
                         )
                     ) || availableVoices.find(voice => voice.lang.startsWith('en-'))
                     || availableVoices[0];
+                    // Safari:  Use Microsoft female voices
                 } else if (isSafari) {
                     preferredVoice = availableVoices.find(voice => 
                         voice.name.toLowerCase().includes('samantha')
