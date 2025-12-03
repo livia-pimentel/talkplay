@@ -13,6 +13,7 @@ import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
 import { useAudioRecorder } from '../utils/useAudioRecorder';
 import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
+import UnsupportedBrowser from '../components/UnsupportedBrowser';
 import { saveProgress, getCategoryCompletion, clearCategoryProgress, getCurrentIndex, saveCurrentIndex } from '../utils/storage';
 import '../styles/Flashcard.css';
 import '../styles/FlashcardAnimations.css';
@@ -20,6 +21,7 @@ import '../styles/Toast.css';
 import '../styles/FlashcardMobile.css';
 
 export default function FlashcardPage() {
+    
     const { categoryId } = useParams();
     const { isRecording, startRecording, stopRecording, audioUrl, toast, clearToast, showToast } = useAudioRecorder();
     const { speak, isSpeaking } = useSpeechSynthesis();
@@ -318,26 +320,18 @@ export default function FlashcardPage() {
                     >
                     <i className="fa-solid fa-arrow-left"></i>
                     </button>
-                    {currentWordIndex < categoryFlashcards.length - 1 && (
-                        <button
-                            className="nav-button next"
-                            onClick={goToNext}
-                            aria-label='Next card'
-                        >
-                            <i className='fa-solid fa-arrow-right'></i>
-                        </button>
-                    )}
-                </div>
-                {currentWordIndex === categoryFlashcards.length - 1 && (
-                <div className="finish-button-container">
-                    <button 
-                        className="finish-main-button" 
-                        onClick={goToNext} 
+                    <button
+                        className={`nav-button next ${currentWordIndex === categoryFlashcards.length - 1 ? 'finish' : ''}`}
+                        onClick={goToNext}
+                        aria-label={currentWordIndex === categoryFlashcards.length - 1 ? 'Finish practice' : 'Next card'}
                     >
-                        Finish! 🎉
+                        {currentWordIndex === categoryFlashcards.length - 1 ? (
+                            <>Finish!  🎉</>
+                        ) : (
+                            <i className='fa-solid fa-arrow-right'></i>
+                        )}
                     </button>
                 </div>
-                )}
                 </>
             )}
             

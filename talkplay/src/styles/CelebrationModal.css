@@ -210,3 +210,22 @@
         height: 8px;
     }
 }
+
+/* Added sparkle animation for celebration text */
+@keyframes sparkle {
+    0%, 100% { 
+        text-shadow: 
+            3px 3px 8px rgba(0, 0, 0, 0.3),
+            0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    50% { 
+        text-shadow: 
+            3px 3px 8px rgba(0, 0, 0, 0.3),
+            0 0 40px rgba(255, 255, 255, 0.8),
+            0 0 60px rgba(255, 255, 255, 0.4);
+    }
+}
+
+.celebration-message {
+    animation: pulse 1s ease-in-out infinite, sparkle 2s ease-in-out infinite;
+}

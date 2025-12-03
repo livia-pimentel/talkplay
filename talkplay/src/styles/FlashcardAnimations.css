@@ -236,10 +236,16 @@
     animation: flashcardWaveInwardPlay 0.4s ease-in;
 }
 
+/* Add squish animation for buttons */
+@keyframes squish {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.88) scaleY(0.92); }
+    100% { transform: scale(1); }
+}
+
 .control-button:active {
-    transform: scale(0.95);
-    filter: brightness(0.9);
-    transition: all 0.1s ease;
+    animation: squish 0.2s ease;
+    filter: brightness(0.95);
 }
 
 .control-button.listen.speaking {
@@ -354,4 +360,37 @@
 .slide-in-right {
     transform: translateX(-100%);
     animation: slideInFromLeft 0.3s ease forwards;
+}
+
+/* ============================================
+    ADDED ENHANCED FOCUS STATES
+   ============================================ */
+
+.control-button:focus-visible {
+    outline: none;
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        0 0 0 4px white,
+        0 0 0 8px var(--blue);
+}
+
+.control-button.listen:focus-visible {
+    box-shadow: 
+        0 8px 24px rgba(58, 134, 255, 0.4),
+        0 0 0 4px white,
+        0 0 0 8px var(--blue);
+}
+
+.control-button.record:focus-visible {
+    box-shadow: 
+        0 8px 24px rgba(255, 0, 110, 0.4),
+        0 0 0 4px white,
+        0 0 0 8px var(--pink);
+}
+
+.control-button.play:focus-visible {
+    box-shadow: 
+        0 8px 24px rgba(6, 255, 165, 0.4),
+        0 0 0 4px white,
+        0 0 0 8px var(--green);
 }
