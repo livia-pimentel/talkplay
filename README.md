@@ -113,39 +113,56 @@ npm run preview
 ## 📁 Project Structure
 
 ```text
-talkplay/
-├── docs/                          # Documentation files
+.                                 
+├── docs/                                    # Design documentation
 │   └── design-document.html
-├── talkplay/                      # Main application directory
-│   ├── public/                    # Static assets
+├── talkplay/                                # 🦁 MAIN APPLICATION SOURCE CODE
+│   ├── public/                              # Static public assets 
 │   ├── src/
-│   │   ├── assets/
-│   │   │   └── images/
-│   │   │       ├── animals/       # 10 animal images
-│   │   │       ├── categories/    # Category icons
-│   │   │       ├── foods/         # 10 food images
-│   │   │       └── toys/          # 10 toy images
-│   │   ├── components/
-│   │   │   ├── CategoryCard.jsx   # Reusable category card component
-│   │   │   └── CategoryCard.css
-│   │   ├── data/
-│   │   │   ├── categories.js      # Category definitions
-│   │   │   └── flashcards.js      # 30 flashcard data entries
-│   │   ├── pages/
-│   │   │   ├── Welcome.jsx        # Landing page
-│   │   │   ├── Home.jsx           # Category selection page
-│   │   │   └── FlashcardPage.jsx  # Flashcard display page
-│   │   ├── styles/
-│   │   │   └── global.css         # Global styles
-│   │   ├── utils/
-│   │   │   └── storage.js         # Local storage utilities
-│   │   ├── main.jsx               # App entry point & routing
-│   │   └── index.css              # Base styles
-│   ├── index.html
-│   ├── package.json
-│   ├── vite.config.js
-│   └── eslint.config.js
-└── README.md
+│   │   ├── assets/                          # Imported assets
+│   │   │   └── images/                      # Organized by category (animals, foods, toys)
+│   │   ├── components/                      # Reusable UI Components
+│   │   │   ├── CategoryCard.jsx             # Home screen navigation card
+│   │   │   ├── CelebrationModal.jsx         # Popup for completion
+│   │   │   ├── CompletionCelebration.jsx    # Animation logic
+│   │   │   ├── Flashcard.jsx                # The main game card component
+│   │   │   └── ProgressBar.jsx              # Visual progress indicator
+│   │   ├── data/                            # Static Configuration Data
+│   │   │   ├── categories.js                # Category metadata (colors, icons)
+│   │   │   └── flashcards.js                # The "Database" of words and image paths
+│   │   ├── pages/                           # Main Application Views
+│   │   │   ├── FlashcardPage.jsx            # The core game container
+│   │   │   ├── Home.jsx                     # Dashboard / Category selection
+│   │   │   └── Welcome.jsx                  # Landing / Start screen
+│   │   ├── styles/                          # CSS Modules (Separated by component)
+│   │   │   ├── CategoryCard.css             # Styles for category buttons
+│   │   │   ├── CelebrationModal.css         # Styles for the popup modal
+│   │   │   ├── CompletionCelebration.css    # Styles for animations
+│   │   │   ├── Flashcard.css                # Layout specific to the card UI
+│   │   │   ├── FlashcardAnimations.css      # Keyframes for recording/playing effects
+│   │   │   ├── FlashcardMobile.css          # Mobile-specific media queries
+│   │   │   ├── Home.css                     # Styles for the dashboard
+│   │   │   ├── index.css                    # Global resets and variables
+│   │   │   ├── ProgressBar.css              # Styles for the progress indicator
+│   │   │   ├── Toast.css                    # Styling for alert messages
+│   │   │   └── Welcome.css                  # Styles for the landing page
+│   │   ├── utils/                           # Helper Functions & Custom Hooks
+│   │   │   ├── storage.js                   # LocalStorage abstraction layer
+│   │   │   ├── useAudioRecorder.js          # MediaRecorder logic & permissions
+│   │   │   └── useSpeechSynthesis.js        # Text-to-Speech logic
+│   │   └── main.jsx                         # Entry point & Router definition
+│   ├── .gitattributes                       # Git line ending rules
+│   ├── .gitignore                           # Files ignored by Git
+│   ├── ARCHITECTURE.md                      # Technical Architecture Documentation
+│   ├── eslint.config.js                     # Linting configuration
+│   ├── index.html                           # HTML entry point (SEO & Meta tags)
+│   ├── package-lock.json                    # Application lock file
+│   ├── package.json                         # Project dependencies and scripts
+│   ├── README.md                            # Application specific readme
+│   ├── vercel.json                          # Routing configuration for SPA
+│   └── vite.config.js                       # Vite build configuration
+├── package-lock.json                        # Root lock file
+└── README.md                                # Main Project Documentation
 ```
 
 ## 🎮 Usage
