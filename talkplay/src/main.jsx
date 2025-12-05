@@ -14,7 +14,7 @@ const Home = lazy(() => import('./pages/Home.jsx'));
 const FlashcardPage = lazy(() => import('./pages/FlashcardPage.jsx'));
 const UnsupportedBrowser = lazy(() => import('./components/UnsupportedBrowser.jsx'));
 
-const RouterWrapper = () => {
+export const RouterWrapper = () => {
   const router = createBrowserRouter([
     { path: '/', element: <Suspense fallback={<Loading />}><Welcome /></Suspense>, errorElement: <RouteError /> },
     { path: '/categories', element: <Suspense fallback={<Loading />}><Home /></Suspense>, errorElement: <RouteError /> },

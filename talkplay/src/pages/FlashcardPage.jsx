@@ -48,6 +48,14 @@ export default function FlashcardPage() {
     // Get current flashcard
     const currentCard = categoryFlashcards[currentWordIndex];
     
+    // Calculate progress based on current index (so that it shows 100% on last item)
+    const getProgressByIndex = () => {
+        const current = progress.completed + 1;
+        const total = progress.total;
+        const percentage = Math.round((current / total) * 100);
+        return { completed: current, total, percentage };
+    };
+    
     // Navigation handlers
     const goToNext = () => {
         saveProgress(categoryId, currentCard.id);
@@ -255,9 +263,9 @@ export default function FlashcardPage() {
             
             <div className="progress-bar-container">
                 <ProgressBar 
-                    current={progress.completed}
-                    total={progress.total}
-                    percentage={progress.percentage}
+                    current={getProgressByIndex().completed}
+                    total={getProgressByIndex().total}
+                    percentage={getProgressByIndex().percentage}
                 />
             </div>
             </div>

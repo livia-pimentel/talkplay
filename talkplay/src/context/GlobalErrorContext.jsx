@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-export const GlobalErrorContext = createContext({
+const GlobalErrorContext = createContext({
   hasError: false,
   error: null,
   setGlobalError: () => {},
