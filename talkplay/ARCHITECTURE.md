@@ -101,40 +101,51 @@ Note that custom hooks are located within the `utils`
 directory.
 
 ```text
-src/
-├── assets/                         # Static assets
-│   └── images/                     # Organized by category (animals, foods, toys)
-├── components/                     # Reusable UI Components
-│   ├── CategoryCard.jsx            # Home screen navigation card
-│   ├── CelebrationModal.jsx        # Popup for completion
-│   ├── CompletionCelebration.jsx   # Animation logic
-│   ├── Flashcard.jsx               # The main game card component
-│   └── ProgressBar.jsx             # Visual progress indicator
-├── data/                           # Static Configuration Data
-│   ├── categories.js               # Category metadata (colors, icons)
-│   └── flashcards.js               # The "Database" of words and image paths
-├── pages/                          # Main Application Views
-│   ├── FlashcardPage.jsx           # The core game container
-│   ├── Home.jsx                    # Dashboard / Category selection
-│   └── Welcome.jsx                 # Landing / Start screen
-├── styles/                         # CSS Modules (Separated by component)
-│   ├── CategoryCard.css            # Styles for category buttons
-│   ├── CelebrationModal.css        # Styles for the popup modal
-│   ├── CompletionCelebration.css   # Styles for animations
-│   ├── Flashcard.css               # Layout specific to the card UI
-│   ├── FlashcardAnimations.css     # Keyframes for recording/playing effects
-│   ├── FlashcardMobile.css         # Mobile-specific media queries
-│   ├── Home.css                    # Styles for the dashboard
-│   ├── index.css                   # Global resets
-│   ├── ProgressBar.css             # Styles for the progress indicator
-│   ├── Toast.css                   # Styling for alert messages
-│   └── Welcome.css                 # Styles for the landing page
-├── utils/                          # Helper Functions & Custom Hooks
-│   ├── storage.js                  # LocalStorage abstraction layer
-│   ├── useAudioRecorder.js         # MediaRecorder logic & permissions
-│   └── useSpeechSynthesis.js       # Text-to-Speech logic
-├── App.jsx                         # Route definitions
-└── main.jsx                        # Entry point
+talkplay/                               # Main Project Directory
+├── public/                             # Static public assets (favicon, preview.png)
+├── src/
+│   ├── assets/                         # Static assets (imported in code)
+│   │   └── images/                     # Organized by category (animals, foods, toys)
+│   ├── components/                     # Reusable UI Components
+│   │   ├── CategoryCard.jsx            # Home screen navigation card
+│   │   ├── CelebrationModal.jsx        # Popup for completion
+│   │   ├── CompletionCelebration.jsx   # Animation logic
+│   │   ├── Flashcard.jsx               # The main game card component
+│   │   └── ProgressBar.jsx             # Visual progress indicator
+│   ├── data/                           # Static Configuration Data
+│   │   ├── categories.js               # Category metadata (colors, icons)
+│   │   └── flashcards.js               # The "Database" of words and image paths
+│   ├── pages/                          # Main Application Views
+│   │   ├── FlashcardPage.jsx           # The core game container
+│   │   ├── Home.jsx                    # Dashboard / Category selection
+│   │   └── Welcome.jsx                 # Landing / Start screen
+│   ├── styles/                         # CSS Modules (Separated by component)
+│   │   ├── CategoryCard.css            # Styles for category buttons
+│   │   ├── CelebrationModal.css        # Styles for the popup modal
+│   │   ├── CompletionCelebration.css   # Styles for animations
+│   │   ├── Flashcard.css               # Layout specific to the card UI
+│   │   ├── FlashcardAnimations.css     # Keyframes for recording/playing effects
+│   │   ├── FlashcardMobile.css         # Mobile-specific media queries
+│   │   ├── Home.css                    # Styles for the dashboard
+│   │   ├── index.css                   # Global resets and variables
+│   │   ├── ProgressBar.css             # Styles for the progress indicator
+│   │   ├── Toast.css                   # Styling for alert messages
+│   │   └── Welcome.css                 # Styles for the landing page
+│   ├── utils/                          # Helper Functions & Custom Hooks
+│   │   ├── storage.js                  # LocalStorage abstraction layer
+│   │   ├── useAudioRecorder.js         # MediaRecorder logic & permissions
+│   │   └── useSpeechSynthesis.js       # Text-to-Speech logic
+│   └── main.jsx                        # Entry point & Router definition
+├── .gitattributes                      # Git line ending rules (CRLF/LF)
+├── .gitignore                          # Files ignored by Git (node_modules, etc.)
+├── ARCHITECTURE.md                     # Technical Architecture Documentation
+├── eslint.config.js                    # Linting configuration for code quality
+├── index.html                          # HTML entry point (SEO & Meta tags)
+├── package-lock.json                   # Exact version dependency lock
+├── package.json                        # Project dependencies and scripts
+├── README.md                           # Project overview and setup guide
+├── vercel.json                         # Routing configuration for SPA
+└── vite.config.js                      # Vite build configuration
 ```
 
 ## 4. ⚙️ Key Implementation Details
