@@ -3,9 +3,6 @@
     Minimal reset and base configuration
    ============================================ */
 
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap');
-
   html, body, #root {
     margin: 0 !important;
     padding: 0 !important;

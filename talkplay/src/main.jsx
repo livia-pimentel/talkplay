@@ -1,34 +1,36 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './styles/index.css';
-import Welcome from './pages/Welcome.jsx';
-import Home from './pages/Home.jsx';
-import FlashcardPage from "./pages/FlashcardPage.jsx";
-import UnsupportedBrowser from './components/UnsupportedBrowser.jsx'
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import GlobalErrorProvider from './context/GlobalErrorContext.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
+import RouteError from './components/RouteError.jsx';
+import Loading from './components/Loading.jsx';
 
-// Creation of routes
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <Welcome />  // Welcome page is the landing page
-  },
-  {
-    path: '/categories',
-    element: <Home />  // Category selection is in categories
-  },
-  {
-    path: '/category/:categoryId',
-    element: <FlashcardPage />,
-  },
-  {
-    path: '/test-browser', // TEMPORARY TEST ROUTE - Remove after testing!
-    element: <UnsupportedBrowser />,
-  }
-]);
+// Lazy-loaded pages to reduce initial bundle and critical path
+const Welcome = lazy(() => import('./pages/Welcome.jsx'));
+const Home = lazy(() => import('./pages/Home.jsx'));
+const FlashcardPage = lazy(() => import('./pages/FlashcardPage.jsx'));
+const UnsupportedBrowser = lazy(() => import('./components/UnsupportedBrowser.jsx'));
+
+const RouterWrapper = () => {
+  const router = createBrowserRouter([
+    { path: '/', element: <Suspense fallback={<Loading />}><Welcome /></Suspense>, errorElement: <RouteError /> },
+    { path: '/categories', element: <Suspense fallback={<Loading />}><Home /></Suspense>, errorElement: <RouteError /> },
+    { path: '/category/:categoryId', element: <Suspense fallback={<Loading />}><FlashcardPage /></Suspense>, errorElement: <RouteError /> },
+    { path: '/test-browser', element: <Suspense fallback={<Loading />}><UnsupportedBrowser /></Suspense>, errorElement: <RouteError /> },
+  ]);
+
+  return <RouterProvider router={router} />;
+};
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <GlobalErrorProvider>
+      <ErrorBoundary>
+        <RouterWrapper />
+      </ErrorBoundary>
+    </GlobalErrorProvider>
   </React.StrictMode>
-)
+);
