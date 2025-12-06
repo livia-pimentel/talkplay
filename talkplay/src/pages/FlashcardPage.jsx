@@ -13,6 +13,7 @@ import { allFlashcards } from '../data/flashcards';
 import { categories } from '../data/categories';
 import { useAudioRecorder } from '../utils/useAudioRecorder';
 import { useSpeechSynthesis } from '../utils/useSpeechSynthesis';
+import checkBrowserSupport from '../utils/checkBrowserSupport';
 import UnsupportedBrowser from '../components/UnsupportedBrowser';
 import { saveProgress, getCategoryCompletion, clearCategoryProgress, getCurrentIndex, saveCurrentIndex } from '../utils/storage';
 import '../styles/Flashcard.css';
@@ -25,6 +26,7 @@ export default function FlashcardPage() {
     const { categoryId } = useParams();
     const { isRecording, startRecording, stopRecording, audioUrl, toast, clearToast, showToast } = useAudioRecorder();
     const { speak, isSpeaking } = useSpeechSynthesis();
+    const { speechSynthesis: speechSupported, mediaDevices: mediaSupported, allSupported } = checkBrowserSupport();
     
     // Get category info
     const category = categories.find(cat => cat.id === categoryId);
@@ -45,6 +47,14 @@ export default function FlashcardPage() {
     
     // Get current flashcard
     const currentCard = categoryFlashcards[currentWordIndex];
+    
+    // Calculate progress based on current index (so that it shows 100% on last item)
+    const getProgressByIndex = () => {
+        const current = progress.completed + 1;
+        const total = progress.total;
+        const percentage = Math.round((current / total) * 100);
+        return { completed: current, total, percentage };
+    };
     
     // Navigation handlers
     const goToNext = () => {
@@ -208,6 +218,17 @@ export default function FlashcardPage() {
         }
     };
     
+    // If browser doesn't support required APIs, show the unsupported screen
+    if (!allSupported) {
+        return (
+            <div className="flashcard-page">
+                <div className="flashcard-page-container">
+                    <UnsupportedBrowser speechSynthesis={speechSupported} mediaDevices={mediaSupported} />
+                </div>
+            </div>
+        );
+    }
+
     // If category doesn't exist or has no flashcards
     if (!category || categoryFlashcards.length === 0) {
         return (
@@ -242,9 +263,9 @@ export default function FlashcardPage() {
             
             <div className="progress-bar-container">
                 <ProgressBar 
-                    current={progress.completed}
-                    total={progress.total}
-                    percentage={progress.percentage}
+                    current={getProgressByIndex().completed}
+                    total={getProgressByIndex().total}
+                    percentage={getProgressByIndex().percentage}
                 />
             </div>
             </div>
