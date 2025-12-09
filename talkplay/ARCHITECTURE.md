@@ -22,7 +22,7 @@ ensuring low latency, privacy, and offline capabilities.
 flowchart LR
     %% Users
     User([User / Child]) -->|Interacts| UI[Interface React]
-    UI --> App[App.jsx / Router]
+    UI --> App[main.jsx / Router]
 
     %% Navagation Layer
     subgraph Views [Main Views]
